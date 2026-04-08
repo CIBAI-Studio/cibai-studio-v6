@@ -375,6 +375,15 @@
   width: 100%;
 }
 
+/* ═══ Service Card (dynamic colors) ═══ */
+.service-card:hover {
+  border-color: var(--svc-hover-border, var(--color-cyber-orange));
+}
+
+.service-card:hover > div:first-child {
+  transform: scaleX(1);
+}
+
 /* ═══ Ticker Separator ═══ */
 .ticker-sep {
   line-height: 1;

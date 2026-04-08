@@ -49,14 +49,24 @@ const secondaryColor = settings.visual.secondaryColor;
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{title}</title>
 
-    <!-- Dynamic color overrides from admin settings -->
+    <!-- Dynamic overrides from admin settings -->
     <style set:html={`
       :root {
         --color-cyber-orange: ${primaryColor};
         --color-cyber-orange-light: ${primaryColorLight};
         --color-cyber-teal: ${secondaryColor};
       }
+      /* Typography overrides */
+      h1 { font-family: ${settings.typography.h1.fontFamily}; font-size: ${settings.typography.h1.fontSize}; font-weight: ${settings.typography.h1.fontWeight}; line-height: ${settings.typography.h1.lineHeight}; letter-spacing: ${settings.typography.h1.letterSpacing}; }
+      h2 { font-family: ${settings.typography.h2.fontFamily}; font-size: ${settings.typography.h2.fontSize}; font-weight: ${settings.typography.h2.fontWeight}; line-height: ${settings.typography.h2.lineHeight}; letter-spacing: ${settings.typography.h2.letterSpacing}; }
+      h3 { font-family: ${settings.typography.h3.fontFamily}; font-size: ${settings.typography.h3.fontSize}; font-weight: ${settings.typography.h3.fontWeight}; line-height: ${settings.typography.h3.lineHeight}; letter-spacing: ${settings.typography.h3.letterSpacing}; }
+      h4 { font-family: ${settings.typography.h4.fontFamily}; font-size: ${settings.typography.h4.fontSize}; font-weight: ${settings.typography.h4.fontWeight}; line-height: ${settings.typography.h4.lineHeight}; letter-spacing: ${settings.typography.h4.letterSpacing}; }
+      h5 { font-family: ${settings.typography.h5.fontFamily}; font-size: ${settings.typography.h5.fontSize}; font-weight: ${settings.typography.h5.fontWeight}; line-height: ${settings.typography.h5.lineHeight}; letter-spacing: ${settings.typography.h5.letterSpacing}; }
+      h6 { font-family: ${settings.typography.h6.fontFamily}; font-size: ${settings.typography.h6.fontSize}; font-weight: ${settings.typography.h6.fontWeight}; line-height: ${settings.typography.h6.lineHeight}; letter-spacing: ${settings.typography.h6.letterSpacing}; }
+      p { font-family: ${settings.typography.p.fontFamily}; font-size: ${settings.typography.p.fontSize}; font-weight: ${settings.typography.p.fontWeight}; line-height: ${settings.typography.p.lineHeight}; letter-spacing: ${settings.typography.p.letterSpacing}; }
+      span.typo-override { font-family: ${settings.typography.span.fontFamily}; font-size: ${settings.typography.span.fontSize}; font-weight: ${settings.typography.span.fontWeight}; line-height: ${settings.typography.span.lineHeight}; letter-spacing: ${settings.typography.span.letterSpacing}; }
     `}></style>
+    {settings.visual.customCSS && <style set:html={settings.visual.customCSS}></style>}
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({

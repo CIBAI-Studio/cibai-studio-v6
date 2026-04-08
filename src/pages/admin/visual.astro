@@ -15,12 +15,15 @@ if (Astro.request.method === 'POST') {
   const primaryColor = (formData.get('primaryColor') as string || '').trim();
   const secondaryColor = (formData.get('secondaryColor') as string || '').trim();
 
+  const customCSS = (formData.get('customCSS') as string || '');
+
   const hexRegex = /^#[0-9A-Fa-f]{6}$/;
   if (hexRegex.test(primaryColor) && hexRegex.test(secondaryColor)) {
     settings.visual.primaryColor = primaryColor.toUpperCase();
     settings.visual.secondaryColor = secondaryColor.toUpperCase();
+    settings.visual.customCSS = customCSS;
     saveSettings(settings);
-    successMessage = 'Colores guardados correctamente. Los cambios se verán en la web pública.';
+    successMessage = 'Visual guardado correctamente. Los cambios se verán en la web pública.';
   }
 }
 ---
@@ -113,8 +116,20 @@ if (Astro.request.method === 'POST') {
       </div>
     </div>
 
+    <div class="card-brutal p-6 mb-6">
+      <h2 class="font-mono text-xs text-cyber-orange uppercase tracking-widest mb-4">CSS Personalizado</h2>
+      <p class="text-[10px] text-cyber-text font-mono mb-3">Este CSS se cargará después de los estilos predeterminados y prevalecerá sobre ellos.</p>
+      <textarea
+        name="customCSS"
+        rows="12"
+        class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors resize-y"
+        placeholder="/* Ejemplo: */&#10;.btn-primary { border-radius: 4px; }&#10;h1 { color: #FF0000; }"
+        spellcheck="false"
+      >{settings.visual.customCSS}</textarea>
+    </div>
+
     <button type="submit" class="btn-primary text-xs py-3 px-6">
-      Guardar colores
+      Guardar visual
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
     </button>
   </form>

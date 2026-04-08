@@ -219,17 +219,21 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {t.servicios.items.map((service: any) => (
-        <div class="card-brutal p-8 flex flex-col h-full">
+      {settings.services.map((service) => (
+        <div
+          class="service-card bg-cyber-dark border border-cyber-border relative p-8 flex flex-col h-full transition-all duration-300 hover:-translate-y-0.5"
+          style={`--svc-hover-border: ${service.colors.hoverBorderColor};`}
+        >
+          <div class="absolute top-0 left-0 right-0 h-0.5 scale-x-0 origin-left transition-transform duration-300" style={`background: ${service.colors.hoverBorderColor};`}></div>
           <div class="flex items-baseline justify-between mb-6">
-            <span class="font-mono text-[10px] text-cyber-teal uppercase tracking-widest">{service.label}</span>
-            <span class="text-5xl font-black text-cyber-white/[0.07]">{service.num}</span>
+            <span class="font-mono text-[10px] uppercase tracking-widest" style={`color: ${service.colors.labelColor};`}>{service.label[locale] || service.label.es}</span>
+            <span class="text-5xl font-black" style={`color: ${service.colors.numColor};`}>{service.num}</span>
           </div>
-          <h3 class="text-xl font-bold mb-4 text-cyber-white">{service.title}</h3>
-          <p class="text-sm text-cyber-text leading-relaxed mb-6 flex-1">{service.description}</p>
+          <h3 class="text-xl font-bold mb-4" style={`color: ${service.colors.titleColor};`}>{service.title[locale] || service.title.es}</h3>
+          <p class="text-sm leading-relaxed mb-6 flex-1" style={`color: ${service.colors.descriptionColor};`}>{service.description[locale] || service.description.es}</p>
           <div class="flex flex-wrap gap-2 mt-auto">
             {service.tags.map((tag: string) => (
-              <span class="font-mono text-[10px] px-2 py-1 border border-cyber-border text-cyber-text">{tag}</span>
+              <span class="font-mono text-[10px] px-2 py-1 border text-cyber-text" style={`border-color: ${service.colors.tagBorderColor};`}>{tag}</span>
             ))}
           </div>
         </div>
