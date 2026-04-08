@@ -232,8 +232,8 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
           <h3 class="text-xl font-bold mb-4" style={`color: ${service.colors.titleColor};`}>{service.title[locale] || service.title.es}</h3>
           <p class="text-sm leading-relaxed mb-6 flex-1" style={`color: ${service.colors.descriptionColor};`}>{service.description[locale] || service.description.es}</p>
           <div class="flex flex-wrap gap-2 mt-auto">
-            {service.tags.map((tag: string) => (
-              <span class="font-mono text-[10px] px-2 py-1 border text-cyber-text" style={`border-color: ${service.colors.tagBorderColor};`}>{tag}</span>
+            {service.tags.map((tag: any) => (
+              <span class="font-mono text-[10px] px-2 py-1 border text-cyber-text" style={`border-color: ${tag.borderColor || '#2a2a2a'};`}>{tag.text || tag}</span>
             ))}
           </div>
         </div>

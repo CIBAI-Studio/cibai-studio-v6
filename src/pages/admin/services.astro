@@ -2,7 +2,7 @@
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import '../../styles/global.css';
 import { getAuthUser } from '../../lib/auth';
-import { loadSettings, saveSettings, generateId, type ServiceItem } from '../../lib/settings';
+import { loadSettings, saveSettings, generateId, type ServiceItem, type ServiceTag } from '../../lib/settings';
 import { locales, getLocaleLabels } from '../../i18n';
 
 const user = getAuthUser(Astro.cookies);
@@ -10,7 +10,6 @@ if (!user) return Astro.redirect('/admin/login');
 
 const settings = loadSettings();
 let successMessage = '';
-let errorMessage = '';
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
@@ -24,20 +23,29 @@ if (Astro.request.method === 'POST') {
       const existing = settings.services.find(s => s.id === id);
       if (!existing) continue;
 
+      // Parse tags: tag_text_<id>_<idx> and tag_color_<id>_<idx>
+      const tags: ServiceTag[] = [];
+      let tagIdx = 0;
+      while (formData.has(`tag_text_${id}_${tagIdx}`)) {
+        const text = (formData.get(`tag_text_${id}_${tagIdx}`) as string || '').trim();
+        const borderColor = (formData.get(`tag_color_${id}_${tagIdx}`) as string || '#2a2a2a').trim();
+        if (text) tags.push({ text, borderColor });
+        tagIdx++;
+      }
+
       const svc: ServiceItem = {
         id,
         num: (formData.get(`num_${id}`) as string) || existing.num,
         label: {} as Record<string, string>,
         title: {} as Record<string, string>,
         description: {} as Record<string, string>,
-        tags: ((formData.get(`tags_${id}`) as string) || '').split(',').map(t => t.trim()).filter(Boolean),
+        tags,
         colors: {
           numColor: (formData.get(`color_num_${id}`) as string) || existing.colors.numColor,
           labelColor: (formData.get(`color_label_${id}`) as string) || existing.colors.labelColor,
           titleColor: (formData.get(`color_title_${id}`) as string) || existing.colors.titleColor,
           descriptionColor: (formData.get(`color_desc_${id}`) as string) || existing.colors.descriptionColor,
           hoverBorderColor: (formData.get(`color_hover_${id}`) as string) || existing.colors.hoverBorderColor,
-          tagBorderColor: (formData.get(`color_tag_${id}`) as string) || existing.colors.tagBorderColor,
         },
       };
 
@@ -62,14 +70,16 @@ if (Astro.request.method === 'POST') {
       label: { es: 'NUEVO_SERVICIO', ca: 'NOU_SERVEI' },
       title: { es: 'Nuevo Servicio', ca: 'Nou Servei' },
       description: { es: 'Descripción del servicio.', ca: 'Descripció del servei.' },
-      tags: ['TAG1', 'TAG2'],
+      tags: [
+        { text: 'TAG1', borderColor: '#2a2a2a' },
+        { text: 'TAG2', borderColor: '#2a2a2a' },
+      ],
       colors: {
         numColor: '#FFFFFF12',
         labelColor: settings.visual.secondaryColor,
         titleColor: '#F5F5F5',
         descriptionColor: '#888888',
         hoverBorderColor: settings.visual.primaryColor,
-        tagBorderColor: '#2a2a2a',
       },
     };
     settings.services.push(newSvc);
@@ -82,20 +92,6 @@ if (Astro.request.method === 'POST') {
     settings.services = settings.services.filter(s => s.id !== deleteId);
     saveSettings(settings);
     successMessage = 'Servicio eliminado.';
-  }
-
-  if (action === 'reorder') {
-    const order = (formData.get('order') as string || '').split(',').filter(Boolean);
-    const reordered: ServiceItem[] = [];
-    for (const id of order) {
-      const svc = settings.services.find(s => s.id === id);
-      if (svc) reordered.push(svc);
-    }
-    if (reordered.length === settings.services.length) {
-      settings.services = reordered;
-      saveSettings(settings);
-      successMessage = 'Orden actualizado.';
-    }
   }
 }
 
@@ -111,9 +107,7 @@ const services = settings.services;
     </div>
     <form method="POST">
       <input type="hidden" name="_action" value="create" />
-      <button type="submit" class="btn-primary text-xs py-2 px-5">
-        + Nuevo servicio
-      </button>
+      <button type="submit" class="btn-primary text-xs py-2 px-5">+ Nuevo servicio</button>
     </form>
   </div>
 
@@ -126,7 +120,7 @@ const services = settings.services;
   <form method="POST">
     <input type="hidden" name="_action" value="save_all" />
 
-    {services.map((svc, idx) => (
+    {services.map((svc) => (
       <div class="card-brutal p-6 mb-6">
         <input type="hidden" name="service_id" value={svc.id} />
 
@@ -134,119 +128,98 @@ const services = settings.services;
           <h2 class="font-mono text-sm font-bold text-cyber-white">
             <span class="text-cyber-orange">{svc.num}</span> — {svc.title.es}
           </h2>
-          <button
-            type="button"
-            class="font-mono text-[10px] text-cyber-red hover:text-cyber-red/80 uppercase tracking-widest transition-colors delete-btn"
-            data-id={svc.id}
-            data-name={svc.title.es}
-          >
-            Eliminar
-          </button>
+          <button type="button" class="font-mono text-[10px] text-cyber-red hover:text-cyber-red/80 uppercase tracking-widest transition-colors delete-btn" data-id={svc.id} data-name={svc.title.es}>Eliminar</button>
         </div>
 
-        {/* --- Basic Fields --- */}
+        {/* Basic Fields */}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div>
             <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Número</label>
-            <input type="text" name={`num_${svc.id}`} value={svc.num}
-              class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
-          </div>
-          <div class="md:col-span-2">
-            <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Tags (separados por coma)</label>
-            <input type="text" name={`tags_${svc.id}`} value={svc.tags.join(', ')}
-              class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
+            <input type="text" name={`num_${svc.id}`} value={svc.num} class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
           </div>
         </div>
 
-        {/* --- Translations per locale --- */}
+        {/* Translations per locale */}
         {locales.map((loc) => (
           <div class="mb-6 p-4 border border-cyber-border/50 bg-cyber-black/50">
             <div class="font-mono text-[10px] text-cyber-orange uppercase tracking-widest mb-3">{localeLabels[loc]} ({loc.toUpperCase()})</div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
               <div>
                 <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Label</label>
-                <input type="text" name={`label_${loc}_${svc.id}`} value={svc.label[loc] || ''}
-                  class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
+                <input type="text" name={`label_${loc}_${svc.id}`} value={svc.label[loc] || ''} class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
               </div>
               <div>
                 <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Título</label>
-                <input type="text" name={`title_${loc}_${svc.id}`} value={svc.title[loc] || ''}
-                  class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
+                <input type="text" name={`title_${loc}_${svc.id}`} value={svc.title[loc] || ''} class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
               </div>
             </div>
             <div>
               <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Descripción</label>
-              <textarea name={`desc_${loc}_${svc.id}`} rows="3"
-                class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors resize-none"
-              >{svc.description[loc] || ''}</textarea>
+              <textarea name={`desc_${loc}_${svc.id}`} rows="3" class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors resize-none">{svc.description[loc] || ''}</textarea>
             </div>
           </div>
         ))}
 
-        {/* --- Colors --- */}
+        {/* Tags with individual border colors */}
+        <div class="mb-6">
+          <div class="font-mono text-[10px] text-cyber-text uppercase tracking-widest mb-3">Tags / Tecnologías</div>
+          <div class="space-y-2 tags-container" data-svc-id={svc.id}>
+            {svc.tags.map((tag, tIdx) => (
+              <div class="flex items-center gap-3 tag-row">
+                <input type="text" name={`tag_text_${svc.id}_${tIdx}`} value={tag.text} placeholder="TAG" class="flex-1 bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
+                <div class="flex items-center gap-1">
+                  <label class="font-mono text-[9px] text-cyber-text/50">Borde:</label>
+                  <input type="color" value={tag.borderColor} class="w-7 h-7 border border-cyber-border bg-cyber-black cursor-pointer" oninput={`this.nextElementSibling.value=this.value`} />
+                  <input type="text" name={`tag_color_${svc.id}_${tIdx}`} value={tag.borderColor} class="w-20 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-[10px] text-cyber-white focus:border-cyber-orange focus:outline-none" />
+                </div>
+                <button type="button" class="text-cyber-red text-xs font-mono hover:text-cyber-red/80 remove-tag-btn" title="Eliminar tag">&times;</button>
+              </div>
+            ))}
+          </div>
+          <button type="button" class="mt-2 font-mono text-[10px] text-cyber-teal hover:text-cyber-teal/80 uppercase tracking-widest add-tag-btn" data-svc-id={svc.id} data-next-idx={svc.tags.length}>
+            + Añadir tag
+          </button>
+        </div>
+
+        {/* Colors */}
         <details class="group">
           <summary class="font-mono text-[10px] text-cyber-text uppercase tracking-widest cursor-pointer hover:text-cyber-white transition-colors mb-4">
-            ▸ Colores personalizados
+            &#x25B8; Colores personalizados
           </summary>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pt-2">
             <div>
               <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Color número</label>
               <div class="flex items-center gap-2">
-                <input type="color" value={svc.colors.numColor.length === 7 ? svc.colors.numColor : '#FFFFFF'}
-                  class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer"
-                  oninput={`this.nextElementSibling.value=this.value`} />
-                <input type="text" name={`color_num_${svc.id}`} value={svc.colors.numColor}
-                  class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
+                <input type="color" value={svc.colors.numColor.length === 7 ? svc.colors.numColor : '#FFFFFF'} class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer" oninput={`this.nextElementSibling.value=this.value`} />
+                <input type="text" name={`color_num_${svc.id}`} value={svc.colors.numColor} class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
               </div>
             </div>
             <div>
               <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Color label</label>
               <div class="flex items-center gap-2">
-                <input type="color" value={svc.colors.labelColor}
-                  class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer"
-                  oninput={`this.nextElementSibling.value=this.value`} />
-                <input type="text" name={`color_label_${svc.id}`} value={svc.colors.labelColor}
-                  class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
+                <input type="color" value={svc.colors.labelColor} class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer" oninput={`this.nextElementSibling.value=this.value`} />
+                <input type="text" name={`color_label_${svc.id}`} value={svc.colors.labelColor} class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
               </div>
             </div>
             <div>
               <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Color título</label>
               <div class="flex items-center gap-2">
-                <input type="color" value={svc.colors.titleColor}
-                  class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer"
-                  oninput={`this.nextElementSibling.value=this.value`} />
-                <input type="text" name={`color_title_${svc.id}`} value={svc.colors.titleColor}
-                  class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
+                <input type="color" value={svc.colors.titleColor} class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer" oninput={`this.nextElementSibling.value=this.value`} />
+                <input type="text" name={`color_title_${svc.id}`} value={svc.colors.titleColor} class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
               </div>
             </div>
             <div>
               <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Color descripción</label>
               <div class="flex items-center gap-2">
-                <input type="color" value={svc.colors.descriptionColor}
-                  class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer"
-                  oninput={`this.nextElementSibling.value=this.value`} />
-                <input type="text" name={`color_desc_${svc.id}`} value={svc.colors.descriptionColor}
-                  class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
+                <input type="color" value={svc.colors.descriptionColor} class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer" oninput={`this.nextElementSibling.value=this.value`} />
+                <input type="text" name={`color_desc_${svc.id}`} value={svc.colors.descriptionColor} class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
               </div>
             </div>
             <div>
               <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Color borde hover</label>
               <div class="flex items-center gap-2">
-                <input type="color" value={svc.colors.hoverBorderColor}
-                  class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer"
-                  oninput={`this.nextElementSibling.value=this.value`} />
-                <input type="text" name={`color_hover_${svc.id}`} value={svc.colors.hoverBorderColor}
-                  class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
-              </div>
-            </div>
-            <div>
-              <label class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-1">Color borde tags</label>
-              <div class="flex items-center gap-2">
-                <input type="color" value={svc.colors.tagBorderColor}
-                  class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer"
-                  oninput={`this.nextElementSibling.value=this.value`} />
-                <input type="text" name={`color_tag_${svc.id}`} value={svc.colors.tagBorderColor}
-                  class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
+                <input type="color" value={svc.colors.hoverBorderColor} class="w-8 h-8 border border-cyber-border bg-cyber-black cursor-pointer" oninput={`this.nextElementSibling.value=this.value`} />
+                <input type="text" name={`color_hover_${svc.id}`} value={svc.colors.hoverBorderColor} class="flex-1 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none" />
               </div>
             </div>
           </div>
@@ -268,23 +241,62 @@ const services = settings.services;
     </div>
   )}
 
-  {/* Hidden delete form */}
   <form method="POST" id="delete-form" class="hidden">
     <input type="hidden" name="_action" value="delete" />
     <input type="hidden" name="delete_id" id="delete-id" value="" />
   </form>
 
   <script>
+    // Delete service
     document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = (btn as HTMLElement).dataset.id;
         const name = (btn as HTMLElement).dataset.name;
         if (confirm(`¿Eliminar el servicio "${name}"?`)) {
           const form = document.getElementById('delete-form') as HTMLFormElement;
-          const input = document.getElementById('delete-id') as HTMLInputElement;
-          input.value = id || '';
+          (document.getElementById('delete-id') as HTMLInputElement).value = id || '';
           form.submit();
         }
+      });
+    });
+
+    // Remove tag
+    document.querySelectorAll('.remove-tag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const row = btn.closest('.tag-row');
+        if (row) row.remove();
+        // Re-index remaining tags
+        document.querySelectorAll('.tags-container').forEach(container => {
+          const svcId = (container as HTMLElement).dataset.svcId;
+          container.querySelectorAll('.tag-row').forEach((r, i) => {
+            const textInput = r.querySelector('input[type="text"]') as HTMLInputElement;
+            const colorInput = r.querySelectorAll('input[type="text"]')[1] as HTMLInputElement;
+            if (textInput) textInput.name = `tag_text_${svcId}_${i}`;
+            if (colorInput) colorInput.name = `tag_color_${svcId}_${i}`;
+          });
+        });
+      });
+    });
+
+    // Add tag
+    document.querySelectorAll('.add-tag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const svcId = (btn as HTMLElement).dataset.svcId;
+        const container = document.querySelector(`.tags-container[data-svc-id="${svcId}"]`);
+        if (!container) return;
+        const idx = container.querySelectorAll('.tag-row').length;
+        const row = document.createElement('div');
+        row.className = 'flex items-center gap-3 tag-row';
+        row.innerHTML = `
+          <input type="text" name="tag_text_${svcId}_${idx}" value="" placeholder="TAG" class="flex-1 bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-xs text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors" />
+          <div class="flex items-center gap-1">
+            <label class="font-mono text-[9px] text-cyber-text/50">Borde:</label>
+            <input type="color" value="#2a2a2a" class="w-7 h-7 border border-cyber-border bg-cyber-black cursor-pointer" oninput="this.nextElementSibling.value=this.value" />
+            <input type="text" name="tag_color_${svcId}_${idx}" value="#2a2a2a" class="w-20 bg-cyber-black border border-cyber-border px-2 py-1 font-mono text-[10px] text-cyber-white focus:border-cyber-orange focus:outline-none" />
+          </div>
+          <button type="button" class="text-cyber-red text-xs font-mono hover:text-cyber-red/80" onclick="this.closest('.tag-row').remove()" title="Eliminar tag">&times;</button>
+        `;
+        container.appendChild(row);
       });
     });
   </script>

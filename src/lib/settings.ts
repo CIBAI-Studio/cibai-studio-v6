@@ -7,20 +7,24 @@ const __dirname = dirname(__filename);
 const DATA_DIR = join(__dirname, '..', '..', 'data');
 const SETTINGS_FILE = join(DATA_DIR, 'settings.json');
 
+export interface ServiceTag {
+  text: string;
+  borderColor: string;
+}
+
 export interface ServiceItem {
   id: string;
   num: string;
   label: Record<string, string>;       // { es: "...", ca: "..." }
   title: Record<string, string>;
   description: Record<string, string>;
-  tags: string[];
+  tags: ServiceTag[];
   colors: {
     numColor: string;
     labelColor: string;
     titleColor: string;
     descriptionColor: string;
     hoverBorderColor: string;
-    tagBorderColor: string;
   };
 }
 
@@ -68,14 +72,17 @@ const DEFAULT_SERVICES: ServiceItem[] = [
       es: 'Interfaces visuales que convierten. Diseño UI/UX con identidad de marca, tipografía de alto contraste y animaciones con propósito. Nada genérico, todo a medida.',
       ca: 'Interfícies visuals que converteixen. Disseny UI/UX amb identitat de marca, tipografia d\'alt contrast i animacions amb propòsit. Res genèric, tot a mida.',
     },
-    tags: ['UI/UX', 'FIGMA', 'BRANDING'],
+    tags: [
+      { text: 'UI/UX', borderColor: '#2a2a2a' },
+      { text: 'FIGMA', borderColor: '#2a2a2a' },
+      { text: 'BRANDING', borderColor: '#2a2a2a' },
+    ],
     colors: {
       numColor: '#FFFFFF12',
       labelColor: '#00FFB2',
       titleColor: '#F5F5F5',
       descriptionColor: '#888888',
       hoverBorderColor: '#FF4D00',
-      tagBorderColor: '#2a2a2a',
     },
   },
   {
@@ -87,14 +94,18 @@ const DEFAULT_SERVICES: ServiceItem[] = [
       es: 'Aplicaciones web completas desde cero. React, Next.js, APIs, autenticación y dashboards. Soluciones que escalan con tu negocio y se adaptan a tus procesos.',
       ca: 'Aplicacions web completes des de zero. React, Next.js, APIs, autenticació i dashboards. Solucions que escalen amb el teu negoci i s\'adapten als teus processos.',
     },
-    tags: ['NEXT.JS', 'REACT', 'TS', 'TRPC'],
+    tags: [
+      { text: 'NEXT.JS', borderColor: '#2a2a2a' },
+      { text: 'REACT', borderColor: '#2a2a2a' },
+      { text: 'TS', borderColor: '#2a2a2a' },
+      { text: 'TRPC', borderColor: '#2a2a2a' },
+    ],
     colors: {
       numColor: '#FFFFFF12',
       labelColor: '#00FFB2',
       titleColor: '#F5F5F5',
       descriptionColor: '#888888',
       hoverBorderColor: '#FF4D00',
-      tagBorderColor: '#2a2a2a',
     },
   },
   {
@@ -106,14 +117,17 @@ const DEFAULT_SERVICES: ServiceItem[] = [
       es: 'Tiendas online de alto rendimiento. Integración con pasarelas de pago, gestión de inventario, panel de administración y optimización para conversión máxima.',
       ca: 'Botigues online d\'alt rendiment. Integració amb passarel·les de pagament, gestió d\'inventari, panell d\'administració i optimització per a conversió màxima.',
     },
-    tags: ['SHOPIFY', 'STRIPE', 'NEXT.JS'],
+    tags: [
+      { text: 'SHOPIFY', borderColor: '#2a2a2a' },
+      { text: 'STRIPE', borderColor: '#2a2a2a' },
+      { text: 'NEXT.JS', borderColor: '#2a2a2a' },
+    ],
     colors: {
       numColor: '#FFFFFF12',
       labelColor: '#00FFB2',
       titleColor: '#F5F5F5',
       descriptionColor: '#888888',
       hoverBorderColor: '#FF4D00',
-      tagBorderColor: '#2a2a2a',
     },
   },
   {
@@ -125,14 +139,18 @@ const DEFAULT_SERVICES: ServiceItem[] = [
       es: 'Desde integraciones de terceros hasta sistemas complejos. Si tienes un problema técnico específico, lo resolvemos con el stack más adecuado para tu caso.',
       ca: 'Des d\'integracions de tercers fins a sistemes complexos. Si tens un problema tècnic específic, el resolem amb l\'stack més adequat per al teu cas.',
     },
-    tags: ['NODE.JS', 'POSTGRES', 'REST', 'DEPLOY'],
+    tags: [
+      { text: 'NODE.JS', borderColor: '#2a2a2a' },
+      { text: 'POSTGRES', borderColor: '#2a2a2a' },
+      { text: 'REST', borderColor: '#2a2a2a' },
+      { text: 'DEPLOY', borderColor: '#2a2a2a' },
+    ],
     colors: {
       numColor: '#FFFFFF12',
       labelColor: '#00FFB2',
       titleColor: '#F5F5F5',
       descriptionColor: '#888888',
       hoverBorderColor: '#FF4D00',
-      tagBorderColor: '#2a2a2a',
     },
   },
 ];
@@ -166,7 +184,15 @@ export function loadSettings(): SiteSettings {
   return {
     parameters: { ...DEFAULT_SETTINGS.parameters, ...raw.parameters },
     visual: { ...DEFAULT_SETTINGS.visual, ...raw.visual },
-    services: Array.isArray(raw.services) && raw.services.length > 0 ? raw.services : DEFAULT_SERVICES,
+    services: Array.isArray(raw.services) && raw.services.length > 0
+      ? raw.services.map((s: any) => ({
+          ...s,
+          // Migrate old string[] tags to ServiceTag[] format
+          tags: Array.isArray(s.tags)
+            ? s.tags.map((t: any) => typeof t === 'string' ? { text: t, borderColor: '#2a2a2a' } : t)
+            : [],
+        }))
+      : DEFAULT_SERVICES,
     typography: { ...DEFAULT_SETTINGS.typography, ...raw.typography },
   };
 }
