@@ -1,4 +1,5 @@
-import { compareSync } from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
+const { compareSync } = bcryptjs;
 import { getUserByEmail, createSession, getSession, deleteSession } from './db';
 import type { AstroCookies } from 'astro';
 
