@@ -2,6 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import HomePage from '../../components/HomePage.astro';
 import '../../styles/global.css';
+import { getTranslations } from '../../i18n';
+
+const t = getTranslations('ca');
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -21,67 +24,24 @@ const websiteSchema = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Treballeu només amb grans empreses o també amb pimes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "CIBAI.Studio treballa principalment amb pimes i empreses mitjanes que busquen implementar IA, automatització i software a mida de forma real i orientada a resultats."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Feu només consultoria o també executeu els projectes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Fem les dues coses. Podem ajudar-te a analitzar i definir la solució, però el nostre focus és dissenyar-la, desenvolupar-la i implantar-la a la teva empresa."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Podeu integrar la solució amb les eines que ja fem servir?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Sí. Treballem perquè la solució conviu amb el teu ecosistema tecnològic actual i no generi fricció addicional."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Quina diferència hi ha entre un chatbot i un agent IA?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Un chatbot respon preguntes predefinides seguint regles fixes. Un agent IA pot raonar, prendre decisions, executar accions i treballar amb informació dinàmica de la teva empresa. CIBAI.Studio implementa tots dos segons les necessitats reals del projecte."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Quant tarda un projecte típic d'automatització?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Depèn de l'abast. Un projecte d'automatització d'un procés específic pot estar operatiu en 2–4 setmanes. Projectes més amplis poden requerir entre 1 i 3 mesos. En el diagnòstic inicial definim terminis concrets."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Podem començar per un diagnòstic o per una fase petita?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Sí. El punt de partida habitual és un diagnòstic inicial en el qual analitzem la teva situació, detectem oportunitats i prioritzem què té més sentit implementar primer."
-      }
+  "mainEntity": t.faq.items.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
     }
-  ]
+  }))
 };
 ---
 
 <Layout
-  title="CIBAI.Studio | IA, Automatització i Software per a Empreses"
-  description="Dissenyem i implementem solucions d'IA, automatització, software a mida i webs per a empreses. Resultats reals, no demos. Sol·licita el teu diagnòstic."
+  title={t.meta.title}
+  description={t.meta.description}
   locale="ca"
   canonicalPath="/ca/"
-  hreflangEs="https://cibai.studio/"
-  hreflangCa="https://cibai.studio/ca/"
-  schemaMarkup={[websiteSchema, faqSchema]}
+  isHome={true}
+  pageSchema={faqSchema}
 >
   <HomePage locale="ca" />
 </Layout>

@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import HomePage from '../components/HomePage.astro';
 import '../styles/global.css';
+import { getTranslations } from '../i18n';
+
+const t = getTranslations('es');
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -21,75 +24,24 @@ const websiteSchema = {
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "¿Trabajáis solo con grandes empresas o también con pymes?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "CIBAI.Studio trabaja principalmente con pymes y empresas medianas que buscan implementar IA, automatización y software a medida de forma real y orientada a resultados."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Hacéis solo consultoría o también ejecutáis los proyectos?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Hacemos ambas cosas. Podemos ayudarte a analizar y definir la solución, pero nuestro foco está en diseñarla, desarrollarla e implantarla en tu empresa."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Podéis integrar la solución con las herramientas que ya usamos?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Sí. Trabajamos para que la solución conviva con tu ecosistema tecnológico actual y no genere fricción adicional."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Qué diferencia hay entre un chatbot y un agente IA?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Un chatbot responde preguntas predefinidas siguiendo reglas fijas. Un agente IA puede razonar, tomar decisiones, ejecutar acciones y trabajar con información dinámica de tu empresa. CIBAI.Studio implementa ambos según las necesidades reales del proyecto."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Qué es un sistema RAG y para qué sirve en una empresa?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "RAG (Retrieval Augmented Generation) es una tecnología que permite a un sistema de IA buscar y utilizar documentación e información específica de tu empresa para dar respuestas precisas y contextualizadas. Es ideal para asistentes internos, soporte o bases de conocimiento."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Cuánto tarda un proyecto típico de automatización?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Depende del alcance. Un proyecto de automatización de un proceso específico puede estar operativo en 2–4 semanas. Proyectos más amplios pueden requerir entre 1 y 3 meses. En el diagnóstico inicial definimos plazos concretos."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Podemos empezar por un diagnóstico o por una fase pequeña?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Sí. El punto de partida habitual es un diagnóstico inicial en el que analizamos tu situación, detectamos oportunidades y priorizamos qué tiene más sentido implementar primero."
-      }
+  "mainEntity": t.faq.items.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
     }
-  ]
+  }))
 };
 ---
 
 <Layout
-  title="CIBAI.Studio | IA, Automatización y Software para Empresas"
-  description="Diseñamos e implementamos soluciones de IA, automatización, software a medida y webs para empresas. Resultados reales, no demos. Solicita tu diagnóstico."
+  title={t.meta.title}
+  description={t.meta.description}
   locale="es"
   canonicalPath="/"
-  hreflangEs="https://cibai.studio/"
-  hreflangCa="https://cibai.studio/ca/"
-  schemaMarkup={[websiteSchema, faqSchema]}
+  isHome={true}
+  pageSchema={faqSchema}
 >
   <HomePage locale="es" />
 </Layout>
