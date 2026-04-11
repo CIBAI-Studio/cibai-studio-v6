@@ -70,12 +70,9 @@ const studioUrl = getLocalizedPath('/studio', locale);
       </ol>
     </nav>
 
-    <div class="section-number mb-4">// {isCA ? 'CONTACTE' : 'CONTACTO'}</div>
-    <h1 class="text-[clamp(2.5rem,6vw,5.5rem)] font-black leading-[0.95] tracking-tight mb-6">
-      {isCA
-        ? <><span>PARLA AMB</span><br/><span class="text-cyber-orange glow-orange">EL STUDIO</span></>
-        : <><span>HABLA CON</span><br/><span class="text-cyber-orange glow-orange">EL STUDIO</span></>
-      }
+    <div class="section-number mb-4">// {t.contacto.section_label}</div>
+    <h1 class="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1.1] tracking-tight mb-6 max-w-3xl">
+      {t.contacto.title}
     </h1>
     <p class="text-cyber-text text-lg font-light max-w-2xl leading-relaxed">
       {t.contacto.subtitle}
@@ -92,35 +89,69 @@ const studioUrl = getLocalizedPath('/studio', locale);
         <h2 class="text-xl font-black mb-6 text-cyber-white">
           {isCA ? 'Sol·licita un diagnòstic gratuït' : 'Solicita un diagnóstico gratuito'}
         </h2>
-        <form id="contact-form" class="space-y-6" action="mailto:hola@cibai.studio" method="POST" enctype="text/plain">
-          <div>
-            <label for="contact-name" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_nombre}</label>
-            <input type="text" id="contact-name" name="nombre" required
-              class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors placeholder:text-cyber-text/30"
-              placeholder={t.contacto.placeholder_nombre} />
+        <form id="contact-form" class="space-y-5" action="mailto:hola@cibai.studio" method="POST" enctype="text/plain">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="contact-name" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_nombre}</label>
+              <input type="text" id="contact-name" name="nombre" required
+                class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors placeholder:text-cyber-text/30"
+                placeholder={t.contacto.placeholder_nombre} />
+            </div>
+            <div>
+              <label for="contact-empresa" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_empresa}</label>
+              <input type="text" id="contact-empresa" name="empresa" required
+                class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors placeholder:text-cyber-text/30"
+                placeholder={t.contacto.placeholder_empresa} />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="contact-cargo" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_cargo}</label>
+              <input type="text" id="contact-cargo" name="cargo"
+                class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors placeholder:text-cyber-text/30"
+                placeholder={t.contacto.placeholder_cargo} />
+            </div>
+            <div>
+              <label for="contact-email" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_email}</label>
+              <input type="email" id="contact-email" name="email" required
+                class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors placeholder:text-cyber-text/30"
+                placeholder={t.contacto.placeholder_email} />
+            </div>
           </div>
           <div>
-            <label for="contact-email" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_email}</label>
-            <input type="email" id="contact-email" name="email" required
+            <label for="contact-telefono" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_telefono}</label>
+            <input type="tel" id="contact-telefono" name="telefono"
               class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors placeholder:text-cyber-text/30"
-              placeholder={t.contacto.placeholder_email} />
+              placeholder={t.contacto.placeholder_telefono} />
           </div>
           <div>
             <label for="contact-project" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_proyecto}</label>
             <select id="contact-project" name="proyecto"
               class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors">
+              <option value="ia_automatizacion">{t.contacto.option_ia_automatizacion}</option>
+              <option value="agentes_ia">{t.contacto.option_agentes_ia}</option>
+              <option value="voz_ia">{t.contacto.option_voz_ia}</option>
+              <option value="software">{t.contacto.option_software}</option>
               <option value="web">{t.contacto.option_web}</option>
-              <option value="webapp">{t.contacto.option_webapp}</option>
               <option value="ecommerce">{t.contacto.option_ecommerce}</option>
-              <option value="automatizacion">{t.contacto.option_automatizacion}</option>
               <option value="otro">{t.contacto.option_otro}</option>
             </select>
           </div>
           <div>
             <label for="contact-message" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_mensaje}</label>
-            <textarea id="contact-message" name="mensaje" rows="4" required
+            <textarea id="contact-message" name="mensaje" rows="5" required
               class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors resize-none placeholder:text-cyber-text/30"
               placeholder={t.contacto.placeholder_mensaje}></textarea>
+            <p class="font-mono text-[9px] text-cyber-text/40 mt-2">{t.contacto.microcopy_form}</p>
+          </div>
+          <div>
+            <label for="contact-pref" class="font-mono text-[10px] text-cyber-text uppercase tracking-widest block mb-2">{t.contacto.label_contacto_pref}</label>
+            <select id="contact-pref" name="contacto_pref"
+              class="w-full bg-cyber-black border border-cyber-border px-4 py-3 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors">
+              <option value="email">{t.contacto.option_email}</option>
+              <option value="telefono">{t.contacto.option_telefono}</option>
+              <option value="videollamada">{t.contacto.option_videollamada}</option>
+            </select>
           </div>
           <button type="submit" class="btn-primary w-full justify-center">
             {t.contacto.btn_enviar}
