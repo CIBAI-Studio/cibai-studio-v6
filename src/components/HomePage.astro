@@ -16,6 +16,26 @@ const primaryColor = settings.visual.primaryColor;
 const secondaryColor = settings.visual.secondaryColor;
 const primaryColorLight = lightenColor(primaryColor, 30);
 
+// Hero slides: filtrar activos, ordenar por order, precomputar campos derivados
+const heroSlides = settings.heroSlides.filter(s => s.active).sort((a, b) => a.order - b.order);
+const processedHeroSlides = heroSlides.map((slide, idx) => ({
+  ...slide,
+  idx,
+  isFirst: idx === 0,
+  hd: slide.heading[locale] || slide.heading['es'] || { line1: '', line2: '', line3: '', full: '' },
+  sub: slide.subtitle[locale] || slide.subtitle['es'] || '',
+  term: slide.terminal[locale] || slide.terminal['es'] || { cmd: '', flag: '', lines: [] },
+  bdg: slide.badges[locale] || slide.badges['es'] || ['', '', ''],
+  accentClass: slide.accentColor === 'orange' ? 'text-cyber-orange' : 'text-cyber-teal',
+  oppositeClass: slide.accentColor === 'orange' ? 'text-cyber-teal' : 'text-cyber-orange',
+  glowClass: slide.accentColor === 'orange' ? 'glow-orange' : 'glow-teal',
+  microcopyText: slide.microcopy ? (slide.microcopy[locale] || slide.microcopy['es'] || '') : '',
+  durationMs: slide.duration * 1000,
+}));
+
+// Servicios: filtrar activos y ordenar
+const activeServices = settings.services.filter(s => s.active !== false).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
 const portfolioImages = [
   'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=400&fit=crop',
   'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
@@ -105,179 +125,90 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     <div class="relative" style="min-height: 480px;" id="hero-slider">
       <div class="absolute top-0 right-0 flex items-center gap-4 z-10 animate-fade-in-up animate-delay-500">
         <div class="hero-slider-dots" id="hero-dots">
-          <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
-          <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
-          <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
-          <button class="hero-dot" data-slide="3" aria-label="Slide 4"></button>
+          {processedHeroSlides.map((slide) => (
+            <button class={`hero-dot${slide.isFirst ? ' active' : ''}`} data-slide={slide.idx} aria-label={`Slide ${slide.idx + 1}`}></button>
+          ))}
         </div>
         <div class="hero-slide-progress">
           <div class="hero-slide-progress-bar" id="hero-progress"></div>
         </div>
-        <span class="font-mono text-[9px] text-cyber-text/50" id="hero-slide-counter">01 / 04</span>
+        <span class="font-mono text-[9px] text-cyber-text/50" id="hero-slide-counter">01 / {String(processedHeroSlides.length).padStart(2, '0')}</span>
       </div>
 
       <div class="max-w-4xl relative" style="min-height: 480px;">
 
-        <!-- Slide 1 — Variante A (Pattern Interrupt) -->
-        <div class="hero-slide active" id="hero-slide-0">
-          <div class="font-mono text-xs text-cyber-text mb-6 animate-fade-in-up">
-            <span class="text-cyber-orange">{t.hero.badge_studio}</span>
+        {processedHeroSlides.map((slide) => (
+        <div class={`hero-slide${slide.isFirst ? ' active' : ''}`} id={`hero-slide-${slide.idx}`} data-duration={slide.durationMs}>
+
+          {/* Badges */}
+          <div class={`font-mono text-xs text-cyber-text mb-6${slide.isFirst ? ' animate-fade-in-up' : ''}`}>
+            <span class={slide.accentClass}>{slide.bdg[0]}</span>
             <span class="mx-2 text-cyber-border">//</span>
-            <span>{t.hero.badge_location}</span>
+            <span>{slide.bdg[1]}</span>
             <span class="mx-2 text-cyber-border">//</span>
-            <span class="text-cyber-teal">{t.hero.badge_status}</span>
+            <span class={slide.oppositeClass}>{slide.bdg[2]}</span>
           </div>
 
-          <h1 class="text-[clamp(2rem,5.5vw,5.5rem)] font-black leading-[0.92] tracking-tighter mb-6 animate-fade-in-up animate-delay-100 glitch-text" data-text={t.hero.h1_full}>
-            {t.hero.h1_line1}<br/>
-            {t.hero.h1_line2}<br/>
-            <span class="text-cyber-orange glow-orange">{t.hero.h1_line3}</span>
-          </h1>
+          {/* Heading: h1 para el primero, h2 para el resto */}
+          {slide.isFirst ? (
+            <h1 class={`text-[clamp(2rem,5.5vw,5.5rem)] font-black leading-[0.92] tracking-tighter mb-6 animate-fade-in-up animate-delay-100 glitch-text`} data-text={slide.hd.full}>
+              {slide.hd.line1}<br/>
+              {slide.hd.line2}<br/>
+              <span class={`${slide.accentClass} ${slide.glowClass}`}>{slide.hd.line3}</span>
+            </h1>
+          ) : (
+            <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={slide.hd.full}>
+              {slide.hd.line1}<br/>
+              {slide.hd.line2}<br/>
+              <span class={`${slide.accentClass} ${slide.glowClass}`}>{slide.hd.line3}</span>
+            </h2>
+          )}
 
-          <p class="text-base md:text-lg text-cyber-text/90 max-w-2xl leading-relaxed mb-6 animate-fade-in-up animate-delay-150 font-light">
-            {t.hero.subtitle}
+          {/* Subtitle */}
+          <p class={`text-base md:text-lg text-cyber-text/90 max-w-2xl leading-relaxed mb-6 font-light${slide.isFirst ? ' animate-fade-in-up animate-delay-150' : ''}`}>
+            {slide.sub}
           </p>
 
-          <div class="mb-8 animate-fade-in-up animate-delay-200">
+          {/* Terminal */}
+          <div class={`mb-8${slide.isFirst ? ' animate-fade-in-up animate-delay-200' : ''}`}>
             <div class="font-mono text-sm text-cyber-text max-w-xl leading-relaxed bg-cyber-dark/80 border border-cyber-border p-4">
-              <span class="text-cyber-orange">$</span><span class="text-cyber-teal ml-1">{t.hero.terminal_cmd}</span><span class="text-cyber-text ml-1">{t.hero.terminal_flag}</span>
-              <div class="mt-2" id="typing-container">
-                <span id="typing-text" class="text-cyber-text/90"></span><span class="typing-cursor text-cyber-orange">█</span>
-              </div>
+              <span class="text-cyber-orange">$</span>
+              <span class="text-cyber-teal ml-1">{slide.term.cmd}</span>
+              <span class="text-cyber-text ml-1">{slide.term.flag}</span>
+              {slide.isFirst ? (
+                <div class="mt-2" id="typing-container">
+                  <span id="typing-text" class="text-cyber-text/90"></span><span class="typing-cursor text-cyber-orange">█</span>
+                </div>
+              ) : (
+                <div class="mt-2 text-cyber-text/90">
+                  {slide.term.lines[0]}<br/>
+                  {slide.term.lines[1] && <>{slide.term.lines[1]}<br/></>}
+                  {slide.term.lines[2] && <span class={slide.accentClass}>{slide.term.lines[2]}</span>}
+                </div>
+              )}
             </div>
           </div>
 
-          <div class="flex flex-wrap gap-4 mb-4 animate-fade-in-up animate-delay-300">
-            <a href="#contacto" class="btn-primary btn-glitch">
-              {t.hero.btn_project}
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-            <a href="#servicios" class="btn-secondary btn-glitch">{t.hero.btn_portfolio}</a>
+          {/* Buttons */}
+          <div class={`flex flex-wrap gap-4 mb-4${slide.isFirst ? ' animate-fade-in-up animate-delay-300' : ''}`}>
+            {slide.buttons.map((btn) => (
+              <a href={btn.href} class={`${btn.style === 'primary' ? 'btn-primary' : 'btn-secondary'} btn-glitch`}>
+                {btn.label[locale] || btn.label['es']}
+                {btn.style === 'primary' && (
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                )}
+              </a>
+            ))}
           </div>
-          <p class="font-mono text-[11px] text-cyber-text/40 max-w-lg leading-relaxed animate-fade-in-up animate-delay-400">
-            {t.hero.microcopy}
-          </p>
+
+          {/* Microcopy (solo primer slide) */}
+          {slide.isFirst && slide.microcopyText && (
+            <p class="font-mono text-[11px] text-cyber-text/40 max-w-lg leading-relaxed animate-fade-in-up animate-delay-400">
+              {slide.microcopyText}
+            </p>
+          )}
         </div>
-
-        <!-- Slide 2 — IA y Automatización -->
-        <div class="hero-slide" id="hero-slide-1">
-          <div class="font-mono text-xs text-cyber-text mb-6">
-            <span class="text-cyber-teal">{t.hero.slide2_badge1}</span>
-            <span class="mx-2 text-cyber-border">//</span>
-            <span>{t.hero.slide2_badge2}</span>
-            <span class="mx-2 text-cyber-border">//</span>
-            <span class="text-cyber-orange">{t.hero.slide2_badge3}</span>
-          </div>
-
-          <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={t.hero.h2_full}>
-            {t.hero.h2_line1}<br/>
-            {t.hero.h2_line2}<br/>
-            <span class="text-cyber-teal glow-teal">{t.hero.h2_line3}</span>
-          </h2>
-
-          <p class="text-base md:text-lg text-cyber-text/90 max-w-2xl leading-relaxed mb-6 font-light">
-            {t.hero.slide2_subtitle}
-          </p>
-
-          <div class="mb-8">
-            <div class="font-mono text-sm text-cyber-text max-w-xl leading-relaxed bg-cyber-dark/80 border border-cyber-border p-4">
-              <span class="text-cyber-orange">$</span><span class="text-cyber-teal ml-1">{t.hero.slide2_terminal_cmd}</span><span class="text-cyber-text ml-1">{t.hero.slide2_terminal_flag}</span>
-              <div class="mt-2 text-cyber-text/90">
-                {t.hero.slide2_terminal_line1}<br/>
-                {t.hero.slide2_terminal_line2}<br/>
-                <span class="text-cyber-teal">{t.hero.slide2_terminal_line3}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-4 mb-6">
-            <a href="#servicios" class="btn-primary btn-glitch">
-              {t.hero.btn_services}
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-            <a href="#contacto" class="btn-secondary btn-glitch">{t.hero.btn_contact}</a>
-          </div>
-        </div>
-
-        <!-- Slide 3 — Agentes IA y RAG -->
-        <div class="hero-slide" id="hero-slide-2">
-          <div class="font-mono text-xs text-cyber-text mb-6">
-            <span class="text-cyber-orange">{t.hero.slide3_badge1}</span>
-            <span class="mx-2 text-cyber-border">//</span>
-            <span>{t.hero.slide3_badge2}</span>
-            <span class="mx-2 text-cyber-border">//</span>
-            <span class="text-cyber-teal">{t.hero.slide3_badge3}</span>
-          </div>
-
-          <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={t.hero.h3_full}>
-            {t.hero.h3_line1}<br/>
-            {t.hero.h3_line2}<br/>
-            <span class="text-cyber-orange glow-orange">{t.hero.h3_line3}</span>
-          </h2>
-
-          <p class="text-base md:text-lg text-cyber-text/90 max-w-2xl leading-relaxed mb-6 font-light">
-            {t.hero.slide3_subtitle}
-          </p>
-
-          <div class="mb-8">
-            <div class="font-mono text-sm text-cyber-text max-w-xl leading-relaxed bg-cyber-dark/80 border border-cyber-border p-4">
-              <span class="text-cyber-orange">$</span><span class="text-cyber-teal ml-1">{t.hero.slide3_terminal_cmd}</span><span class="text-cyber-text ml-1">{t.hero.slide3_terminal_flag}</span>
-              <div class="mt-2 text-cyber-text/90">
-                {t.hero.slide3_terminal_line1}<br/>
-                {t.hero.slide3_terminal_line2}<br/>
-                <span class="text-cyber-orange">{t.hero.slide3_terminal_line3}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-4 mb-6">
-            <a href="#servicios" class="btn-primary btn-glitch">
-              {t.hero.btn_slide3_services}
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-            <a href="#contacto" class="btn-secondary btn-glitch">{t.hero.btn_slide3_contact}</a>
-          </div>
-        </div>
-
-        <!-- Slide 4 — Software, Web y Ecommerce -->
-        <div class="hero-slide" id="hero-slide-3">
-          <div class="font-mono text-xs text-cyber-text mb-6">
-            <span class="text-cyber-orange">{t.hero.slide4_badge1}</span>
-            <span class="mx-2 text-cyber-border">//</span>
-            <span>{t.hero.slide4_badge2}</span>
-            <span class="mx-2 text-cyber-border">//</span>
-            <span class="text-cyber-teal">{t.hero.slide4_badge3}</span>
-          </div>
-
-          <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={t.hero.h4_full}>
-            {t.hero.h4_line1}<br/>
-            {t.hero.h4_line2}<br/>
-            <span class="text-cyber-orange glow-orange">{t.hero.h4_line3}</span>
-          </h2>
-
-          <p class="text-base md:text-lg text-cyber-text/90 max-w-2xl leading-relaxed mb-6 font-light">
-            {t.hero.slide4_subtitle}
-          </p>
-
-          <div class="mb-8">
-            <div class="font-mono text-sm text-cyber-text max-w-xl leading-relaxed bg-cyber-dark/80 border border-cyber-border p-4">
-              <span class="text-cyber-orange">$</span><span class="text-cyber-teal ml-1">{t.hero.slide4_terminal_cmd}</span><span class="text-cyber-text ml-1">{t.hero.slide4_terminal_flag}</span>
-              <div class="mt-2 text-cyber-text/90">
-                {t.hero.slide4_terminal_line1}<br/>
-                {t.hero.slide4_terminal_line2}<br/>
-                <span class="text-cyber-orange">{t.hero.slide4_terminal_line3}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-4 mb-6">
-            <a href="#servicios" class="btn-primary btn-glitch">
-              {t.hero.btn_slide4_services}
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-            <a href="#contacto" class="btn-secondary btn-glitch">{t.hero.btn_slide4_contact}</a>
-          </div>
-        </div>
+        ))}
 
       </div>
     </div>
@@ -393,7 +324,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {settings.services.map((service) => (
+      {activeServices.map((service) => (
         <div
           class="service-card bg-cyber-dark border border-cyber-border relative p-8 flex flex-col h-full transition-all duration-300 hover:-translate-y-0.5"
           style={`--svc-hover-border: ${service.colors.hoverBorderColor};`}
@@ -856,7 +787,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
   </div>
 </footer>
 
-<script define:vars={{ typingLines: [t.hero.typing_line1, t.hero.typing_line2, t.hero.typing_line3], formSuccess: t.contacto.form_success, heroSlideDurationMs }}>
+<script define:vars={{ typingLines: processedHeroSlides.length > 0 ? processedHeroSlides[0].term.lines : [t.hero.typing_line1, t.hero.typing_line2, t.hero.typing_line3], formSuccess: t.contacto.form_success, heroSlideDurationMs }}>
   // ── Mobile menu ──────────────────────────────────────────────────────────────
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -912,12 +843,17 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
   updateClock();
   setInterval(updateClock, 1000);
 
-  // ── Hero slider (3 slides) ────────────────────────────────────────────────────
-  const TOTAL_SLIDES = 4;
+  // ── Hero slider — data-driven con duración por slide ─────────────────────────
   let currentSlide = 0;
-  let sliderInterval = null;
+  let sliderTimeout = null;
   let progressStart = null;
   let animFrame = null;
+
+  function getSlideDuration() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const slide = slides[currentSlide];
+    return slide ? parseInt(slide.dataset.duration || String(heroSlideDurationMs)) : heroSlideDurationMs;
+  }
 
   function goToSlide(idx) {
     const slides = document.querySelectorAll('.hero-slide');
@@ -925,45 +861,48 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     const counter = document.getElementById('hero-slide-counter');
     slides.forEach((s, i) => s.classList.toggle('active', i === idx));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    if (counter) counter.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(TOTAL_SLIDES).padStart(2, '0')}`;
+    if (counter) counter.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
     currentSlide = idx;
-    resetProgress();
+    scheduleNext();
+    resetProgressBar();
   }
 
-  function resetProgress() {
+  function resetProgressBar() {
     if (animFrame) cancelAnimationFrame(animFrame);
     const bar = document.getElementById('hero-progress');
     if (!bar) return;
     bar.style.transform = 'scaleX(0)';
     progressStart = performance.now();
-    animateProgress(bar);
+    animateProgress(bar, getSlideDuration());
   }
 
-  function animateProgress(bar) {
+  function animateProgress(bar, dur) {
     animFrame = requestAnimationFrame((now) => {
       const elapsed = now - progressStart;
-      const ratio = Math.min(elapsed / heroSlideDurationMs, 1);
+      const ratio = Math.min(elapsed / dur, 1);
       bar.style.transform = `scaleX(${ratio})`;
-      if (ratio < 1) animateProgress(bar);
+      if (ratio < 1) animateProgress(bar, dur);
     });
   }
 
-  function startSlider() {
-    sliderInterval = setInterval(() => {
-      goToSlide((currentSlide + 1) % TOTAL_SLIDES);
-    }, heroSlideDurationMs);
-    resetProgress();
+  function scheduleNext() {
+    if (sliderTimeout) clearTimeout(sliderTimeout);
+    const dur = getSlideDuration();
+    sliderTimeout = setTimeout(() => {
+      const slides = document.querySelectorAll('.hero-slide');
+      if (slides.length > 1) goToSlide((currentSlide + 1) % slides.length);
+    }, dur);
   }
 
   document.querySelectorAll('.hero-dot').forEach((dot) => {
     dot.addEventListener('click', () => {
-      clearInterval(sliderInterval);
       goToSlide(parseInt(dot.getAttribute('data-slide') || '0'));
-      startSlider();
     });
   });
 
-  startSlider();
+  // Arrancar carousel
+  scheduleNext();
+  resetProgressBar();
 
   // ── Typing effect (Slide 1) ───────────────────────────────────────────────────
   let charIndex = 0;
