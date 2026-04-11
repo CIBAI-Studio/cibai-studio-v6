@@ -1,4 +1,5 @@
-import { hashSync } from 'bcryptjs';
+import bcryptjs from 'bcryptjs';
+const { hashSync } = bcryptjs;
 import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
