@@ -108,11 +108,12 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
           <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
           <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
           <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+          <button class="hero-dot" data-slide="3" aria-label="Slide 4"></button>
         </div>
         <div class="hero-slide-progress">
           <div class="hero-slide-progress-bar" id="hero-progress"></div>
         </div>
-        <span class="font-mono text-[9px] text-cyber-text/50" id="hero-slide-counter">01 / 03</span>
+        <span class="font-mono text-[9px] text-cyber-text/50" id="hero-slide-counter">01 / 04</span>
       </div>
 
       <div class="max-w-4xl relative" style="min-height: 480px;">
@@ -235,6 +236,46 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
             <a href="#contacto" class="btn-secondary btn-glitch">{t.hero.btn_slide3_contact}</a>
+          </div>
+        </div>
+
+        <!-- Slide 4 — Software, Web y Ecommerce -->
+        <div class="hero-slide" id="hero-slide-3">
+          <div class="font-mono text-xs text-cyber-text mb-6">
+            <span class="text-cyber-orange">{t.hero.slide4_badge1}</span>
+            <span class="mx-2 text-cyber-border">//</span>
+            <span>{t.hero.slide4_badge2}</span>
+            <span class="mx-2 text-cyber-border">//</span>
+            <span class="text-cyber-teal">{t.hero.slide4_badge3}</span>
+          </div>
+
+          <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={t.hero.h4_full}>
+            {t.hero.h4_line1}<br/>
+            {t.hero.h4_line2}<br/>
+            <span class="text-cyber-orange glow-orange">{t.hero.h4_line3}</span>
+          </h2>
+
+          <p class="text-base md:text-lg text-cyber-text/90 max-w-2xl leading-relaxed mb-6 font-light">
+            {t.hero.slide4_subtitle}
+          </p>
+
+          <div class="mb-8">
+            <div class="font-mono text-sm text-cyber-text max-w-xl leading-relaxed bg-cyber-dark/80 border border-cyber-border p-4">
+              <span class="text-cyber-orange">$</span><span class="text-cyber-teal ml-1">{t.hero.slide4_terminal_cmd}</span><span class="text-cyber-text ml-1">{t.hero.slide4_terminal_flag}</span>
+              <div class="mt-2 text-cyber-text/90">
+                {t.hero.slide4_terminal_line1}<br/>
+                {t.hero.slide4_terminal_line2}<br/>
+                <span class="text-cyber-orange">{t.hero.slide4_terminal_line3}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-4 mb-6">
+            <a href="#servicios" class="btn-primary btn-glitch">
+              {t.hero.btn_slide4_services}
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <a href="#contacto" class="btn-secondary btn-glitch">{t.hero.btn_slide4_contact}</a>
           </div>
         </div>
 
@@ -872,7 +913,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
   setInterval(updateClock, 1000);
 
   // ── Hero slider (3 slides) ────────────────────────────────────────────────────
-  const TOTAL_SLIDES = 3;
+  const TOTAL_SLIDES = 4;
   let currentSlide = 0;
   let sliderInterval = null;
   let progressStart = null;
@@ -884,7 +925,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     const counter = document.getElementById('hero-slide-counter');
     slides.forEach((s, i) => s.classList.toggle('active', i === idx));
     dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    if (counter) counter.textContent = `${String(idx + 1).padStart(2, '0')} / 0${TOTAL_SLIDES}`;
+    if (counter) counter.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(TOTAL_SLIDES).padStart(2, '0')}`;
     currentSlide = idx;
     resetProgress();
   }
