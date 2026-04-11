@@ -1,6 +1,6 @@
-# CIBAI Studio v5 — i18n + Admin Panel
+# CIBAI Studio v6 — Web Corporativa Cyberpunk
 
-Sitio web corporativo de CIBAI Studio con estética **Cyberpunk Brutal**, sistema de internacionalización (ES/CA) y panel de administración para gestionar traducciones y usuarios.
+Sitio web corporativo de CIBAI Studio con estética **Cyberpunk Brutal**, sistema de internacionalización (ES/CA) y panel de administración. Basado en v5-i18n.
 
 ## Stack
 
@@ -23,14 +23,7 @@ Sitio web corporativo de CIBAI Studio con estética **Cyberpunk Brutal**, sistem
 
 ### Panel de Administración (`/admin`)
 - Login con email + contraseña
-- Edición de traducciones agrupadas por sección:
-  - Página principal (Hero/Inicio)
-  - Servicios
-  - Proceso
-  - Portfolio / Casos de éxito
-  - Studio
-  - Contactar
-  - Navegación, Footer, HUD, SEO
+- Edición de traducciones agrupadas por sección
 - Gestión de usuarios (CRUD) — solo superadmins
 
 ### Usuarios
@@ -59,17 +52,11 @@ src/
   pages/
     index.astro             — Página principal (ES)
     ca/index.astro          — Página principal (CA)
-    admin/
-      login.astro           — Login del admin
-      index.astro           — Editor de traducciones
-      users.astro           — Gestión de usuarios
-      logout.astro          — Cierre de sesión
+    admin/                  — Panel de administración
     aviso-legal.astro       — Aviso legal (ES)
     cookies.astro           — Política de cookies (ES)
     privacidad.astro        — Política de privacidad (ES)
-    ca/aviso-legal.astro    — Aviso legal (CA)
-    ca/cookies.astro        — Política de cookies (CA)
-    ca/privacidad.astro     — Política de privacidad (CA)
+    ca/                     — Páginas legales (CA)
   styles/global.css         — Theme cyberpunk, animaciones, componentes
 data/                       — Base de datos SQLite (gitignored)
 ```
