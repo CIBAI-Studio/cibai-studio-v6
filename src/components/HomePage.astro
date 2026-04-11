@@ -787,7 +787,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
   </div>
 </footer>
 
-<script define:vars={{ typingLines: processedHeroSlides.length > 0 ? processedHeroSlides[0].term.lines : [t.hero.typing_line1, t.hero.typing_line2, t.hero.typing_line3], formSuccess: t.contacto.form_success, heroSlideDurationMs }}>
+<script define:vars={{ typingLines: (processedHeroSlides.length > 0 && processedHeroSlides[0].term.lines.length > 0) ? processedHeroSlides[0].term.lines : [t.hero.typing_line1, t.hero.typing_line2, t.hero.typing_line3], formSuccess: t.contacto.form_success, heroSlideDurationMs }}>
   // ── Mobile menu ──────────────────────────────────────────────────────────────
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -887,10 +887,11 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
 
   function scheduleNext() {
     if (sliderTimeout) clearTimeout(sliderTimeout);
+    const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length <= 1) return;
     const dur = getSlideDuration();
     sliderTimeout = setTimeout(() => {
-      const slides = document.querySelectorAll('.hero-slide');
-      if (slides.length > 1) goToSlide((currentSlide + 1) % slides.length);
+      goToSlide((currentSlide + 1) % slides.length);
     }, dur);
   }
 
