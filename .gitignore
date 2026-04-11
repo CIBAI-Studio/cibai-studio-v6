@@ -25,3 +25,4 @@ data/
 
 # jetbrains setting folder
 .idea/
+tailwindcss-*.log

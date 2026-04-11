@@ -2,16 +2,34 @@
 import type { Locale } from '../i18n';
 import { getTranslations } from '../i18n';
 import { loadSettings, lightenColor } from '../lib/settings';
+import SEOHead from '../components/SEOHead.astro';
+
+const siteUrl = 'https://cibai.studio';
 
 interface Props {
   title: string;
   description: string;
   locale?: Locale;
+  /** Full path like "/studio" or "/ca/contacto". Defaults to Astro.url.pathname. */
+  canonicalPath?: string;
+  hreflangEs?: string;
+  hreflangCa?: string;
+  schemaMarkup?: object[];
 }
 
-const { title, description, locale = 'es' } = Astro.props;
+const {
+  title,
+  description,
+  locale = 'es',
+  canonicalPath,
+  hreflangEs,
+  hreflangCa,
+  schemaMarkup = [],
+} = Astro.props;
+
 const t = getTranslations(locale);
-const siteUrl = 'https://cibai.studio';
+const resolvedPath = canonicalPath ?? Astro.url.pathname;
+const canonical = resolvedPath.startsWith('http') ? resolvedPath : `${siteUrl}${resolvedPath}`;
 const ogLocale = locale === 'ca' ? 'ca_ES' : 'es_ES';
 const settings = loadSettings();
 const primaryColor = settings.visual.primaryColor;
@@ -24,30 +42,21 @@ const secondaryColor = settings.visual.secondaryColor;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#0a0a0a" />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={siteUrl} />
-    <meta property="og:image" content={`${siteUrl}/og-image.jpg`} />
-    <meta property="og:locale" content={ogLocale} />
-    <meta property="og:site_name" content="CIBAI Studio" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${siteUrl}/og-image.jpg`} />
+    <SEOHead
+      title={title}
+      description={description}
+      canonical={canonical}
+      locale={ogLocale}
+      hreflangEs={hreflangEs}
+      hreflangCa={hreflangCa}
+      schemaMarkup={schemaMarkup}
+    />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={siteUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>{title}</title>
 
     <!-- Dynamic overrides from admin settings -->
     <style set:html={`
@@ -67,26 +76,6 @@ const secondaryColor = settings.visual.secondaryColor;
       span.typo-override { font-family: ${settings.typography.span.fontFamily}; font-size: ${settings.typography.span.fontSize}; font-weight: ${settings.typography.span.fontWeight}; line-height: ${settings.typography.span.lineHeight}; letter-spacing: ${settings.typography.span.letterSpacing}; }
     `}></style>
     {settings.visual.customCSS && <style set:html={settings.visual.customCSS}></style>}
-
-    <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "CIBAI Studio",
-      "url": siteUrl,
-      "logo": `${siteUrl}/favicon.svg`,
-      "description": t.meta.schema_description,
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Barcelona",
-        "addressCountry": "ES"
-      },
-      "email": "hola@cibai.studio",
-      "sameAs": [
-        "https://www.linkedin.com/company/cibai-studio",
-        "https://instagram.com/cibai.studio"
-      ]
-    })} />
   </head>
   <body class="bg-cyber-black text-cyber-white">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-orange focus:text-cyber-black focus:font-mono focus:text-sm">

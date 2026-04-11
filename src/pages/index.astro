@@ -5,8 +5,43 @@ import '../styles/global.css';
 import { getTranslations } from '../i18n';
 
 const t = getTranslations('es');
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CIBAI.Studio",
+  "url": "https://cibai.studio",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://cibai.studio/?s={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": t.faq.items.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+};
 ---
 
-<Layout title={t.meta.title} description={t.meta.description} locale="es">
+<Layout
+  title={t.meta.title}
+  description={t.meta.description}
+  locale="es"
+  canonicalPath="/"
+  isHome={true}
+  pageSchema={faqSchema}
+>
   <HomePage locale="es" />
 </Layout>
