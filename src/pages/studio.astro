@@ -2,9 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import StudioPage from '../components/StudioPage.astro';
 import '../styles/global.css';
-import { getTranslations } from '../i18n';
-
-const t = getTranslations('es');
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -38,16 +35,16 @@ const breadcrumbSchema = {
     }
   ]
 };
-
-const combinedSchema = [personSchema, breadcrumbSchema];
 ---
 
 <Layout
-  title={t.meta.studio_title}
-  description={t.meta.studio_description}
+  title="Studio | Equipo de IA, Automatización y Software — CIBAI"
+  description="Conoce el equipo de CIBAI.Studio: estrategia, IA, automatización, diseño y desarrollo orientados a resultados reales para empresas. Habla con el Studio."
   locale="es"
   canonicalPath="/studio"
-  pageSchema={combinedSchema}
+  hreflangEs="https://cibai.studio/studio"
+  hreflangCa="https://cibai.studio/ca/studio"
+  schemaMarkup={[personSchema, breadcrumbSchema]}
 >
   <StudioPage locale="es" />
 </Layout>

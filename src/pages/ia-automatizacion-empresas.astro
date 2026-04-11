@@ -2,9 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import IAAutomatizacionPage from '../components/IAAutomatizacionPage.astro';
 import '../styles/global.css';
-import { getTranslations } from '../i18n';
-
-const t = getTranslations('es');
 
 const serviceSchema = {
   "@context": "https://schema.org",
@@ -48,15 +45,54 @@ const breadcrumbSchema = {
   ]
 };
 
-const combinedSchema = [serviceSchema, breadcrumbSchema];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda un proyecto típico de automatización?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende del alcance. Un proyecto de automatización de un proceso específico puede estar operativo en 2–4 semanas. Proyectos más amplios de automatización operativa completa pueden requerir entre 1 y 3 meses. En el diagnóstico inicial definimos plazos concretos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Podéis integraros con las herramientas que ya usamos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Trabajamos con la mayoría de herramientas de mercado: Salesforce, HubSpot, Pipedrive, SAP, Microsoft 365, Google Workspace, Slack, Notion y muchas más. Si tiene una API, podemos conectarla."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesitamos un equipo técnico interno?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. CIBAI.Studio se encarga de todo el proceso de diseño, implementación y puesta en marcha. Formamos a tu equipo en el uso del sistema y ofrecemos soporte posterior."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Podemos empezar por una automatización pequeña?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutamente. De hecho, es lo que recomendamos. Empezamos por un diagnóstico y elegimos el proceso que genera el mayor impacto con el menor esfuerzo. Eso valida el enfoque y genera confianza."
+      }
+    }
+  ]
+};
 ---
 
 <Layout
-  title={t.meta.ia_title}
-  description={t.meta.ia_description}
+  title="IA y Automatización para Empresas | CIBAI.Studio"
+  description="Reducimos tareas manuales, conectamos herramientas y diseñamos flujos inteligentes para que tu empresa gane eficiencia real. Solicita diagnóstico gratuito."
   locale="es"
   canonicalPath="/ia-automatizacion-empresas"
-  pageSchema={combinedSchema}
+  hreflangEs="https://cibai.studio/ia-automatizacion-empresas"
+  hreflangCa="https://cibai.studio/ca/ia-automatizacion-empresas"
+  schemaMarkup={[serviceSchema, breadcrumbSchema, faqSchema]}
 >
   <IAAutomatizacionPage locale="es" />
 </Layout>

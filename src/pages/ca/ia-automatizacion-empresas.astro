@@ -2,9 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import IAAutomatizacionPage from '../../components/IAAutomatizacionPage.astro';
 import '../../styles/global.css';
-import { getTranslations } from '../../i18n';
-
-const t = getTranslations('ca');
 
 const serviceSchema = {
   "@context": "https://schema.org",
@@ -48,15 +45,54 @@ const breadcrumbSchema = {
   ]
 };
 
-const combinedSchema = [serviceSchema, breadcrumbSchema];
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quant tarda un projecte típic d'automatització?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depèn de l'abast. Un projecte d'automatització d'un procés específic pot estar operatiu en 2–4 setmanes. Projectes més amplis poden requerir entre 1 i 3 mesos. En el diagnòstic inicial definim terminis concrets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Podeu integrar-vos amb les eines que ja fem servir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Treballem amb la majoria d'eines de mercat: Salesforce, HubSpot, Pipedrive, SAP, Microsoft 365, Google Workspace, Slack, Notion i moltes més. Si tens una API, podem connectar-la."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Necessitem un equip tècnic intern?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. CIBAI.Studio s'encarrega de tot el procés de disseny, implementació i posada en marxa. Formem al teu equip en l'ús del sistema i oferim suport posterior."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Podem començar per una automatització petita?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutament. De fet, és el que recomanem. Comencem per un diagnòstic i triem el procés que genera l'impacte més alt amb el menor esforç. Això valida l'enfocament i genera confiança."
+      }
+    }
+  ]
+};
 ---
 
 <Layout
-  title={t.meta.ia_title}
-  description={t.meta.ia_description}
+  title="IA i Automatització per a Empreses | CIBAI.Studio"
+  description="Reduïm tasques manuals, connectem eines i dissenyem fluxos intel·ligents perquè la teva empresa guanyi eficiència real. Sol·licita diagnòstic gratuït."
   locale="ca"
   canonicalPath="/ca/ia-automatizacion-empresas"
-  pageSchema={combinedSchema}
+  hreflangEs="https://cibai.studio/ia-automatizacion-empresas"
+  hreflangCa="https://cibai.studio/ca/ia-automatizacion-empresas"
+  schemaMarkup={[serviceSchema, breadcrumbSchema, faqSchema]}
 >
   <IAAutomatizacionPage locale="ca" />
 </Layout>
