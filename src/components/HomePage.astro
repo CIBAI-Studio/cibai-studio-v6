@@ -60,14 +60,14 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
     <div class="flex items-center gap-6">
       <div class="hidden md:flex items-center gap-8">
         <a href="#main-content" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.inicio}</a>
-        <a href="#servicios" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.servicios}</a>
+        <a href={getLocalizedPath('/ia-automatizacion-empresas', locale)} class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.servicios}</a>
         <a href="#proceso" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.proceso}</a>
         <a href="#portfolio" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.portfolio}</a>
-        <a href="#studio" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.studio}</a>
+        <a href={getLocalizedPath('/studio', locale)} class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.studio}</a>
       </div>
       <div class="flex items-center gap-3">
         <LanguageSelector currentLocale={locale} />
-        <a href="#contacto" class="btn-primary text-xs py-2 px-5 hidden sm:inline-flex">{t.nav.proyecto}</a>
+        <a href={getLocalizedPath('/contacto', locale)} class="btn-primary text-xs py-2 px-5 hidden sm:inline-flex">{t.nav.proyecto}</a>
         <button
           id="mobile-menu-btn"
           class="md:hidden flex flex-col justify-center items-center w-10 h-10 border border-cyber-border hover:border-cyber-orange transition-colors"
@@ -85,12 +85,12 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
   <div id="mobile-menu" class="md:hidden hidden border-t border-cyber-border bg-cyber-black/95 backdrop-blur-md">
     <div class="px-6 py-6 space-y-4">
       <a href="#main-content" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.inicio}</a>
-      <a href="#servicios" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.servicios}</a>
+      <a href={getLocalizedPath('/ia-automatizacion-empresas', locale)} class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.servicios}</a>
       <a href="#proceso" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.proceso}</a>
       <a href="#portfolio" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.portfolio}</a>
-      <a href="#studio" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.studio}</a>
+      <a href={getLocalizedPath('/studio', locale)} class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.studio}</a>
       <div class="pt-4 border-t border-cyber-border">
-        <a href="#contacto" class="btn-primary text-xs w-full justify-center">{t.nav.solicitar_proyecto}</a>
+        <a href={getLocalizedPath('/contacto', locale)} class="btn-primary text-xs w-full justify-center">{t.nav.solicitar_proyecto}</a>
       </div>
     </div>
   </div>
@@ -140,7 +140,7 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
           </div>
 
           <div class="flex flex-wrap gap-4 mb-6 animate-fade-in-up animate-delay-300">
-            <a href="#contacto" class="btn-primary btn-glitch">
+            <a href={getLocalizedPath('/contacto', locale)} class="btn-primary btn-glitch">
               {t.hero.btn_project}
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
@@ -176,11 +176,11 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
           </div>
 
           <div class="flex flex-wrap gap-4 mb-6">
-            <a href="#servicios" class="btn-primary btn-glitch">
+            <a href={getLocalizedPath('/ia-automatizacion-empresas', locale)} class="btn-primary btn-glitch">
               {t.hero.btn_services}
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
-            <a href="#contacto" class="btn-secondary btn-glitch">{t.hero.btn_contact}</a>
+            <a href={getLocalizedPath('/contacto', locale)} class="btn-secondary btn-glitch">{t.hero.btn_contact}</a>
           </div>
         </div>
       </div>
@@ -266,7 +266,7 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
     </div>
 
     <div class="mt-12 text-center">
-      <a href="#contacto" class="btn-secondary text-xs">
+      <a href={getLocalizedPath('/contacto', locale)} class="btn-secondary text-xs">
         {t.proceso.btn_start}
         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
@@ -474,10 +474,10 @@ const tickerItems = ['ASTRO', 'NEXT.JS', 'REACT', 'TAILWIND', 'TYPESCRIPT', 'NOD
       <div>
         <div class="font-mono text-[10px] text-cyber-text uppercase tracking-widest mb-4">{t.footer.nav_label}</div>
         <div class="space-y-3">
-          <a href="#" class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_inicio}</a>
-          <a href="#servicios" class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_servicios}</a>
+          <a href={getLocalizedPath('/', locale)} class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_inicio}</a>
+          <a href={getLocalizedPath('/ia-automatizacion-empresas', locale)} class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_servicios}</a>
           <a href="#portfolio" class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_portfolio}</a>
-          <a href="#studio" class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_studio}</a>
+          <a href={getLocalizedPath('/studio', locale)} class="block text-sm text-cyber-text hover:text-cyber-white transition-colors">{t.footer.link_studio}</a>
         </div>
       </div>
 

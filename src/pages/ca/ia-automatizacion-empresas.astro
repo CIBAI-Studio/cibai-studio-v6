@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import IAAutomatizacionPage from '../../components/IAAutomatizacionPage.astro';
+import '../../styles/global.css';
+import { getTranslations } from '../../i18n';
+
+const t = getTranslations('ca');
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "IA i Automatització per a Empreses",
+  "description": "Disseny i implementació d'automatitzacions, integracions i fluxos intel·ligents per millorar l'eficiència operativa empresarial.",
+  "provider": {
+    "@type": "Organization",
+    "name": "CIBAI.Studio",
+    "url": "https://cibai.studio"
+  },
+  "serviceType": "Automatització de processos empresarials amb IA",
+  "areaServed": {
+    "@type": "Country",
+    "name": "España"
+  },
+  "url": "https://cibai.studio/ca/ia-automatizacion-empresas",
+  "offers": {
+    "@type": "Offer",
+    "description": "Diagnòstic inicial gratuït per identificar oportunitats d'automatització",
+    "url": "https://cibai.studio/ca/contacto"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inici",
+      "item": "https://cibai.studio/ca/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "IA i Automatització",
+      "item": "https://cibai.studio/ca/ia-automatizacion-empresas"
+    }
+  ]
+};
+
+const combinedSchema = [serviceSchema, breadcrumbSchema];
+---
+
+<Layout
+  title={t.meta.ia_title}
+  description={t.meta.ia_description}
+  locale="ca"
+  canonicalPath="/ca/ia-automatizacion-empresas"
+  pageSchema={combinedSchema}
+>
+  <IAAutomatizacionPage locale="ca" />
+</Layout>

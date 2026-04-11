@@ -219,8 +219,14 @@
     "made_in": "Fet amb intensitat a Barcelona"
   },
   "meta": {
-    "title": "CIBAI Studio — Fem el web brutal",
-    "description": "Agència de disseny web, desenvolupament d'aplicacions i intel·ligència artificial per a empreses a Espanya. Disseny cyberpunk, codi brutal, resultats reals.",
-    "schema_description": "Agència de disseny web, desenvolupament d'aplicacions i intel·ligència artificial per a empreses a Espanya."
+    "title": "CIBAI.Studio | IA, Automatització i Software per a Empreses",
+    "description": "Dissenyem i implementem solucions d'IA, automatització, software a mida i webs per a empreses. Resultats reals, no demos. Sol·licita el teu diagnòstic.",
+    "schema_description": "Estudi especialitzat en IA, automatització, software a mida i actius digitals per a empreses.",
+    "ia_title": "IA i Automatització per a Empreses | CIBAI.Studio",
+    "ia_description": "Reduïm tasques manuals, connectem eines i dissenyem fluxos intel·ligents perquè la teva empresa guanyi eficiència real. Sol·licita diagnòstic gratuït.",
+    "studio_title": "Studio | Equip d'IA, Automatització i Software — CIBAI",
+    "studio_description": "Coneix l'equip de CIBAI.Studio: estratègia, IA, automatització, disseny i desenvolupament orientats a resultats reals per a empreses. Parla amb el Studio.",
+    "contacto_title": "Contacte — CIBAI.Studio | Diagnòstic Gratuït",
+    "contacto_description": "Sol·licita un diagnòstic inicial gratuït per identificar oportunitats d'IA, automatització i software a la teva empresa. Responem en 24h."
   }
 }

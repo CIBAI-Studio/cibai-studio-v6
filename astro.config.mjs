@@ -8,7 +8,12 @@ export default defineConfig({
   site: 'https://cibai.studio',
   output: 'server',
   adapter: node({ mode: 'standalone' }),
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.includes('/admin/') && !page.includes('/api/'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
