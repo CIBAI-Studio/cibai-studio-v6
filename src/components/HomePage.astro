@@ -93,12 +93,12 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     <div class="flex items-center gap-6">
       <div class="hidden md:flex items-center gap-8">
         <a href="#main-content" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.inicio}</a>
-        <div class="relative group">
-          <span class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors flex items-center gap-1 cursor-pointer">
+        <div class="relative group" id="desktop-idioma-group">
+          <span class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors flex items-center gap-1 cursor-pointer" id="desktop-idioma-trigger">
             {t.nav.en_tu_idioma}
             <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </span>
-          <div class="absolute top-full left-0 mt-2 w-48 bg-cyber-black/95 backdrop-blur-md border border-cyber-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div class="absolute top-full left-0 mt-2 w-48 bg-cyber-black/95 backdrop-blur-md border border-cyber-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" id="desktop-idioma-dropdown">
             {enTuIdiomaLinks.map((link) => (
               <a href={link.href} class="block px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-cyber-text hover:text-cyber-orange hover:bg-cyber-dark/60 transition-colors border-b border-cyber-border/30 last:border-b-0">
                 {link.label}
@@ -106,12 +106,12 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
             ))}
           </div>
         </div>
-        <div class="relative group">
-          <a href="#servicios" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors flex items-center gap-1">
+        <div class="relative group" id="desktop-services-group">
+          <a href="#servicios" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors flex items-center gap-1" id="desktop-services-trigger">
             {t.nav.servicios}
             <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </a>
-          <div class="absolute top-full left-0 mt-2 w-56 bg-cyber-black/95 backdrop-blur-md border border-cyber-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <div class="absolute top-full left-0 mt-2 w-56 bg-cyber-black/95 backdrop-blur-md border border-cyber-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" id="desktop-services-dropdown">
             {serviceDropdownLinks.map((link) => (
               <a href={link.href} class="block px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-cyber-text hover:text-cyber-orange hover:bg-cyber-dark/60 transition-colors border-b border-cyber-border/30 last:border-b-0">
                 {link.label}
@@ -144,7 +144,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     <div class="px-6 py-6 space-y-4">
       <a href="#main-content" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.inicio}</a>
       <div>
-        <button id="mobile-idioma-toggle" class="mobile-nav-link w-full text-left font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2 flex items-center justify-between">
+        <button id="mobile-idioma-toggle" class="w-full text-left font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2 flex items-center justify-between">
           {t.nav.en_tu_idioma}
           <svg class="w-3 h-3 transition-transform" id="mobile-idioma-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
@@ -157,7 +157,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
         </div>
       </div>
       <div>
-        <button id="mobile-services-toggle" class="mobile-nav-link w-full text-left font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2 flex items-center justify-between">
+        <button id="mobile-services-toggle" class="w-full text-left font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2 flex items-center justify-between">
           {t.nav.servicios}
           <svg class="w-3 h-3 transition-transform" id="mobile-services-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
@@ -878,6 +878,37 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
         lines[0]?.classList.remove('translate-y-[4px]', 'rotate-45');
         lines[1]?.classList.remove('opacity-0');
         lines[2]?.classList.remove('-translate-y-[4px]', '-rotate-45');
+      });
+    });
+  }
+
+  // ── Desktop dropdown touch support (tablet) ─────────────────────────────────
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) {
+    const desktopDropdowns = [
+      { trigger: document.getElementById('desktop-idioma-trigger'), dropdown: document.getElementById('desktop-idioma-dropdown') },
+      { trigger: document.getElementById('desktop-services-trigger'), dropdown: document.getElementById('desktop-services-dropdown') }
+    ];
+    desktopDropdowns.forEach(({ trigger, dropdown }) => {
+      if (!trigger || !dropdown) return;
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isVisible = dropdown.classList.contains('touch-open');
+        // Close all desktop dropdowns first
+        desktopDropdowns.forEach(({ dropdown: dd }) => {
+          if (dd) { dd.classList.remove('touch-open'); dd.style.opacity = ''; dd.style.visibility = ''; }
+        });
+        if (!isVisible) {
+          dropdown.classList.add('touch-open');
+          dropdown.style.opacity = '1';
+          dropdown.style.visibility = 'visible';
+        }
+      });
+    });
+    document.addEventListener('click', () => {
+      desktopDropdowns.forEach(({ dropdown }) => {
+        if (dropdown) { dropdown.classList.remove('touch-open'); dropdown.style.opacity = ''; dropdown.style.visibility = ''; }
       });
     });
   }
