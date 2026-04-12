@@ -35,6 +35,7 @@ export interface HeroSlideHeading {
   line2: string;
   line3: string;
   full: string;
+  dataText?: string;
 }
 
 export interface HeroSlideTerminal {
@@ -106,21 +107,23 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'orange',
     badges: {
-      es: ['CIBAI_STUDIO', 'BERGA, BARCELONA, ESPAÑA', 'STATUS: ONLINE'],
-      ca: ['CIBAI_STUDIO', 'BERGA, BARCELONA, ESPANYA', 'STATUS: ONLINE'],
+      es: ['CIBAI_STUDIO', 'BERGA · BARCELONA · ESPAÑA', 'IA · AUTOMATIZACIÓN · SOFTWARE'],
+      ca: ['CIBAI_STUDIO', 'BERGA · BARCELONA · ESPANYA', 'IA · AUTOMATITZACIÓ · PROGRAMARI'],
     },
     heading: {
       es: {
-        line1: 'LA TECNOLOGÍA NO',
-        line2: 'TRANSFORMA EMPRESAS.',
-        line3: 'LOS SISTEMAS BIEN DISEÑADOS, SÍ.',
-        full: 'La tecnología no transforma empresas. Los sistemas bien diseñados, sí.',
+        line1: 'LA TECNOLOGÍA NO BASTA.',
+        line2: 'DISEÑAMOS SISTEMAS DE IA,',
+        line3: 'AUTOMATIZACIÓN Y SOFTWARE QUE SÍ FUNCIONAN.',
+        full: 'La tecnología no basta. Diseñamos sistemas de IA, automatización y software que sí funcionan.',
+        dataText: 'CIBAI.Studio — Consultoría tecnológica en IA, automatización y software a medida para empresas',
       },
       ca: {
-        line1: 'LA TECNOLOGIA NO',
-        line2: 'TRANSFORMA EMPRESES.',
-        line3: 'ELS SISTEMES BEN DISSENYATS, SÍ.',
-        full: 'La tecnologia no transforma empreses. Els sistemes ben dissenyats, sí.',
+        line1: "LA TECNOLOGIA NO N'HI HA PROU.",
+        line2: "DISSENYEM SISTEMES D'IA,",
+        line3: 'AUTOMATITZACIÓ I PROGRAMARI QUE SÍ FUNCIONEN.',
+        full: "La tecnologia no n'hi ha prou. Dissenyem sistemes d'IA, automatització i programari que sí funcionen.",
+        dataText: 'CIBAI.Studio — Consultoria tecnològica en IA, automatització i programari a mida per a empreses',
       },
     },
     subtitle: {
@@ -171,21 +174,23 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'teal',
     badges: {
-      es: ['IA_AUTOMATIZACIÓN', 'EFICIENCIA OPERATIVA', 'SIGNAL: ACTIVE'],
-      ca: ['IA_AUTOMATITZACIÓ', 'EFICIÈNCIA OPERATIVA', 'SIGNAL: ACTIVE'],
+      es: ['AUTOMATIZACIÓN', 'IA APLICADA', 'EFICIENCIA OPERATIVA'],
+      ca: ['AUTOMATITZACIÓ', 'IA APLICADA', 'EFICIÈNCIA OPERATIVA'],
     },
     heading: {
       es: {
-        line1: 'RECUPERA EL TIEMPO',
-        line2: 'QUE TU EQUIPO',
-        line3: 'PIERDE EN TAREAS REPETITIVAS',
-        full: 'Recupera el tiempo que tu equipo pierde en tareas que ya puede hacer una máquina',
+        line1: 'AUTOMATIZACIÓN DE PROCESOS',
+        line2: 'QUE LIBERA A TU EQUIPO',
+        line3: 'PARA LO QUE GENERA VALOR REAL.',
+        full: 'Automatización de procesos que libera a tu equipo para lo que genera valor real.',
+        dataText: 'Automatización de procesos empresariales con IA — recupera tiempo y eficiencia operativa',
       },
       ca: {
-        line1: 'RECUPERA EL TEMPS',
-        line2: 'QUE EL TEU EQUIP',
-        line3: 'PERD EN TASQUES REPETITIVES',
-        full: 'Recupera el temps que el teu equip perd en tasques que ja pot fer una màquina',
+        line1: 'AUTOMATITZACIÓ DE PROCESSOS',
+        line2: 'QUE ALLIBERA EL TEU EQUIP',
+        line3: 'PER AL QUE GENERA VALOR REAL.',
+        full: 'Automatització de processos que allibera el teu equip per al que genera valor real.',
+        dataText: 'Automatització de processos empresarials amb IA — recupera temps i eficiència operativa',
       },
     },
     subtitle: {
@@ -232,21 +237,23 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'teal',
     badges: {
-      es: ['AGENTES_IA', 'RAG · CHATBOTS · VOZ', 'NODE: ACTIVE'],
-      ca: ['AGENTS_IA', 'RAG · CHATBOTS · VEU', 'NODE: ACTIVE'],
+      es: ['AGENTES_IA', 'CHATBOTS RAG', 'VOZ INTELIGENTE'],
+      ca: ['AGENTS_IA', 'CHATBOTS RAG', 'VEU INTEL·LIGENT'],
     },
     heading: {
       es: {
-        line1: 'RESPONDE MÁS RÁPIDO,',
-        line2: 'ATIENDE MEJOR,',
-        line3: 'CONVIERTE MÁS OPORTUNIDADES',
-        full: 'Responde más rápido, atiende mejor y convierte el conocimiento disperso en ventaja operativa',
+        line1: 'AGENTES IA QUE ATIENDEN,',
+        line2: 'RESPONDEN Y CONVIERTEN',
+        line3: 'SIN AUMENTAR TU EQUIPO.',
+        full: 'Agentes IA que atienden, responden y convierten sin aumentar tu equipo.',
+        dataText: 'Agentes IA, chatbots RAG y voz inteligente para empresas — atención 24/7 y conversión mejorada',
       },
       ca: {
-        line1: 'RESPON MÉS RÀPID,',
-        line2: 'ATÉN MILLOR,',
-        line3: 'CONVERTEIX MÉS OPORTUNITATS',
-        full: 'Respon més ràpid, atén millor i converteix el coneixement dispers en avantatge operatiu',
+        line1: 'AGENTS IA QUE ATENEN,',
+        line2: 'RESPONEN I CONVERTEIXEN',
+        line3: 'SENSE AMPLIAR EL TEU EQUIP.',
+        full: 'Agents IA que atenen, responen i converteixen sense ampliar el teu equip.',
+        dataText: 'Agents IA, chatbots RAG i veu intel·ligent per a empreses — atenció 24/7 i conversió millorada',
       },
     },
     subtitle: {
@@ -293,21 +300,23 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'orange',
     badges: {
-      es: ['SOFTWARE_WEB', 'WEB · ECOMMERCE · APPS', 'STACK: ACTIVE'],
-      ca: ['SOFTWARE_WEB', 'WEB · ECOMMERCE · APPS', 'STACK: ACTIVE'],
+      es: ['WEB CORPORATIVA', 'ECOMMERCE', 'SOFTWARE A MEDIDA'],
+      ca: ['WEB CORPORATIVA', 'ECOMMERCE', 'PROGRAMARI A MIDA'],
     },
     heading: {
       es: {
-        line1: 'ACTIVOS DIGITALES',
-        line2: 'QUE POSICIONAN,',
-        line3: 'CONVIERTEN Y ESCALAN',
-        full: 'Activos digitales que no solo se ven bien: posicionan, convierten y escalan con tu negocio',
+        line1: 'SOFTWARE Y WEBS A MEDIDA',
+        line2: 'QUE POSICIONAN EN GOOGLE,',
+        line3: 'CONVIERTEN Y ESCALAN.',
+        full: 'Software y webs a medida que posicionan en Google, convierten y escalan.',
+        dataText: 'Desarrollo web corporativo, ecommerce a medida y software empresarial — Barcelona, España',
       },
       ca: {
-        line1: 'ACTIUS DIGITALS',
-        line2: 'QUE POSICIONEN,',
-        line3: 'CONVERTEIXEN I ESCALEN',
-        full: 'Actius digitals que no només es veuen bé: posicionen, converteixen i escalen amb el teu negoci',
+        line1: 'PROGRAMARI I WEBS A MIDA',
+        line2: 'QUE POSICIONEN A GOOGLE,',
+        line3: 'CONVERTEIXEN I ESCALEN.',
+        full: 'Programari i webs a mida que posicionen a Google, converteixen i escalen.',
+        dataText: 'Desenvolupament web corporatiu, ecommerce a mida i programari empresarial — Barcelona, Catalunya',
       },
     },
     subtitle: {

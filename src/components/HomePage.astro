@@ -214,13 +214,13 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
 
           {/* Heading: h1 para el primero, h2 para el resto */}
           {slide.isFirst ? (
-            <h1 class={`text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 animate-fade-in-up animate-delay-100 glitch-text`} data-text={slide.hd.full}>
+            <h1 class={`text-[clamp(2rem,5.5vw,5.5rem)] font-black leading-[0.92] tracking-tighter mb-6 animate-fade-in-up animate-delay-100 glitch-text`} data-text={slide.hd.dataText || slide.hd.full}>
               {slide.hd.line1}<br/>
               {slide.hd.line2}<br/>
               <span class={`${slide.accentClass} ${slide.glowClass}`}>{slide.hd.line3}</span>
             </h1>
           ) : (
-            <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={slide.hd.full}>
+            <h2 class="text-[clamp(1.8rem,5vw,5rem)] font-black leading-[0.92] tracking-tighter mb-6 glitch-text" data-text={slide.hd.dataText || slide.hd.full}>
               {slide.hd.line1}<br/>
               {slide.hd.line2}<br/>
               <span class={`${slide.accentClass} ${slide.glowClass}`}>{slide.hd.line3}</span>
