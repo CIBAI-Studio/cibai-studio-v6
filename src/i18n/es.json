@@ -77,6 +77,12 @@
       "web_corporativa": "Web corporativa",
       "ecommerce": "Ecommerce a medida"
     },
+    "en_tu_idioma": "En tu idioma",
+    "en_tu_idioma_dropdown": {
+      "tecnologia_util": "Tecnología útil",
+      "el_problema": "El Problema",
+      "resultados": "Resultados"
+    },
     "casos_uso": "Casos de uso",
     "proceso": "Proceso",
     "portfolio": "Portfolio",

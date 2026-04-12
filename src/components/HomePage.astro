@@ -12,6 +12,19 @@ const { locale } = Astro.props;
 const t = getTranslations(locale);
 const settings = loadSettings();
 const heroSlideDurationMs = settings.parameters.heroSlideDuration * 1000;
+const serviceDropdownLinks = [
+  { label: t.nav.servicios_dropdown.ia_automatizacion, href: getLocalizedPath('/ia-automatizacion-empresas', locale) },
+  { label: t.nav.servicios_dropdown.agentes_ia, href: getLocalizedPath('/agentes-ia-rag', locale) },
+  { label: t.nav.servicios_dropdown.voz_ia, href: getLocalizedPath('/voz-ia-centralitas', locale) },
+  { label: t.nav.servicios_dropdown.software_medida, href: getLocalizedPath('/software-a-medida', locale) },
+  { label: t.nav.servicios_dropdown.web_corporativa, href: getLocalizedPath('/web-corporativa', locale) },
+  { label: t.nav.servicios_dropdown.ecommerce, href: getLocalizedPath('/ecommerce-a-medida', locale) },
+];
+const enTuIdiomaLinks = [
+  { label: t.nav.en_tu_idioma_dropdown.tecnologia_util, href: '#tecnologia-util' },
+  { label: t.nav.en_tu_idioma_dropdown.el_problema, href: '#problema' },
+  { label: t.nav.en_tu_idioma_dropdown.resultados, href: '#beneficios' },
+];
 const primaryColor = settings.visual.primaryColor;
 const secondaryColor = settings.visual.secondaryColor;
 const primaryColorLight = lightenColor(primaryColor, 30);
@@ -80,7 +93,32 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     <div class="flex items-center gap-6">
       <div class="hidden md:flex items-center gap-8">
         <a href="#main-content" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.inicio}</a>
-        <a href="#servicios" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.servicios}</a>
+        <div class="relative group">
+          <span class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors flex items-center gap-1 cursor-pointer">
+            {t.nav.en_tu_idioma}
+            <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </span>
+          <div class="absolute top-full left-0 mt-2 w-48 bg-cyber-black/95 backdrop-blur-md border border-cyber-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            {enTuIdiomaLinks.map((link) => (
+              <a href={link.href} class="block px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-cyber-text hover:text-cyber-orange hover:bg-cyber-dark/60 transition-colors border-b border-cyber-border/30 last:border-b-0">
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+        <div class="relative group">
+          <a href="#servicios" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors flex items-center gap-1">
+            {t.nav.servicios}
+            <svg class="w-3 h-3 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </a>
+          <div class="absolute top-full left-0 mt-2 w-56 bg-cyber-black/95 backdrop-blur-md border border-cyber-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+            {serviceDropdownLinks.map((link) => (
+              <a href={link.href} class="block px-4 py-2.5 font-mono text-[11px] uppercase tracking-wider text-cyber-text hover:text-cyber-orange hover:bg-cyber-dark/60 transition-colors border-b border-cyber-border/30 last:border-b-0">
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
         <a href="#casos-uso" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.casos_uso}</a>
         <a href="#proceso" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.proceso}</a>
         <a href="#studio" class="font-mono text-xs uppercase tracking-widest text-cyber-text hover:text-cyber-white transition-colors">{t.nav.studio}</a>
@@ -105,7 +143,32 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
   <div id="mobile-menu" class="md:hidden hidden border-t border-cyber-border bg-cyber-black/95 backdrop-blur-md">
     <div class="px-6 py-6 space-y-4">
       <a href="#main-content" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.inicio}</a>
-      <a href="#servicios" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.servicios}</a>
+      <div>
+        <button id="mobile-idioma-toggle" class="mobile-nav-link w-full text-left font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2 flex items-center justify-between">
+          {t.nav.en_tu_idioma}
+          <svg class="w-3 h-3 transition-transform" id="mobile-idioma-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="mobile-idioma-submenu" class="hidden pl-4 space-y-1 pb-2">
+          {enTuIdiomaLinks.map((link) => (
+            <a href={link.href} class="mobile-nav-link block font-mono text-xs uppercase tracking-wider text-cyber-text/70 hover:text-cyber-orange transition-colors py-1.5">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div>
+        <button id="mobile-services-toggle" class="mobile-nav-link w-full text-left font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2 flex items-center justify-between">
+          {t.nav.servicios}
+          <svg class="w-3 h-3 transition-transform" id="mobile-services-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="mobile-services-submenu" class="hidden pl-4 space-y-1 pb-2">
+          {serviceDropdownLinks.map((link) => (
+            <a href={link.href} class="mobile-nav-link block font-mono text-xs uppercase tracking-wider text-cyber-text/70 hover:text-cyber-orange transition-colors py-1.5">
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
       <a href="#casos-uso" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.casos_uso}</a>
       <a href="#proceso" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.proceso}</a>
       <a href="#studio" class="mobile-nav-link block font-mono text-sm uppercase tracking-widest text-cyber-text hover:text-cyber-orange transition-colors py-2">{t.nav.studio}</a>
@@ -192,7 +255,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
           {/* Buttons */}
           <div class={`flex flex-wrap gap-4 mb-4${slide.isFirst ? ' animate-fade-in-up animate-delay-300' : ''}`}>
             {slide.buttons.map((btn) => (
-              <a href={btn.href} class={`${btn.style === 'primary' ? 'btn-primary' : 'btn-secondary'} btn-glitch`}>
+              <a href={btn.href.startsWith('#') ? btn.href : getLocalizedPath(btn.href, locale)} class={`${btn.style === 'primary' ? 'btn-primary' : 'btn-secondary'} btn-glitch`}>
                 {btn.label[locale] || btn.label['es']}
                 {btn.style === 'primary' && (
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -235,7 +298,7 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
 </div>
 
 <!-- ═══════════════ BANDA CREDIBILIDAD ═══════════════ -->
-<section class="py-24 border-b border-cyber-border relative overflow-hidden">
+<section id="tecnologia-util" class="py-24 border-b border-cyber-border relative overflow-hidden">
   <div class="mx-auto max-w-7xl px-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <div>
@@ -819,7 +882,29 @@ const tickerItems = ['IA APLICADA', 'AUTOMATIZACIÓN', 'AGENTES IA', 'RAG', 'VOZ
     });
   }
 
-  // ── Smooth scroll ─────────────────────────────────────────────────────────────
+  // ── Mobile "En tu idioma" submenu toggle ─────────────────────────────────────
+  const idiomaToggle = document.getElementById('mobile-idioma-toggle');
+  const idiomaSubmenu = document.getElementById('mobile-idioma-submenu');
+  const idiomaChevron = document.getElementById('mobile-idioma-chevron');
+  if (idiomaToggle && idiomaSubmenu && idiomaChevron) {
+    idiomaToggle.addEventListener('click', () => {
+      idiomaSubmenu.classList.toggle('hidden');
+      idiomaChevron.classList.toggle('rotate-180');
+    });
+  }
+
+  // ── Mobile services submenu toggle ──────────────────────────────────────────
+  const svcToggle = document.getElementById('mobile-services-toggle');
+  const svcSubmenu = document.getElementById('mobile-services-submenu');
+  const svcChevron = document.getElementById('mobile-services-chevron');
+  if (svcToggle && svcSubmenu && svcChevron) {
+    svcToggle.addEventListener('click', () => {
+      svcSubmenu.classList.toggle('hidden');
+      svcChevron.classList.toggle('rotate-180');
+    });
+  }
+
+  // ── Smooth scroll ───��─────────────────────────────────────────────────────────
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
