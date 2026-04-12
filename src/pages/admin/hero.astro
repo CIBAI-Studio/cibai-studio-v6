@@ -8,6 +8,7 @@ import {
   generateSlideId,
   type HeroSlide,
   type HeroSlideButton,
+  type HeroSlideHeading,
 } from '../../lib/settings';
 import { locales, getLocaleLabels } from '../../i18n';
 
@@ -44,13 +45,18 @@ if (Astro.request.method === 'POST') {
       }
 
       // Heading per locale
-      const heading: Record<string, { line1: string; line2: string; line3: string; full: string }> = {};
+      const heading: Record<string, HeroSlideHeading> = {};
       for (const loc of locales) {
+        const dataTextFromForm = (formData.get(`heading_datatext_${loc}_${id}`) as string || '').trim();
+        const existingDataText = existing?.heading[loc]?.dataText;
         heading[loc] = {
           line1: (formData.get(`heading_line1_${loc}_${id}`) as string) || '',
           line2: (formData.get(`heading_line2_${loc}_${id}`) as string) || '',
           line3: (formData.get(`heading_line3_${loc}_${id}`) as string) || '',
           full:  (formData.get(`heading_full_${loc}_${id}`) as string) || '',
+          ...(dataTextFromForm || existingDataText
+            ? { dataText: dataTextFromForm || existingDataText }
+            : {}),
         };
       }
 
@@ -360,6 +366,16 @@ const slides = [...settings.heroSlides].sort((a, b) => a.order - b.order);
                       rows="2"
                       class="w-full bg-cyber-black border border-cyber-border px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-orange focus:outline-none transition-colors resize-none"
                     >{slide.heading[loc]?.full || ''}</textarea>
+                  </div>
+                  <div>
+                    <label class="font-mono text-[10px] text-cyber-teal uppercase tracking-widest block mb-1">
+                      data-text SEO (atributo schema / crawler — long-tail keywords)
+                    </label>
+                    <textarea
+                      name={`heading_datatext_${loc}_${slide.id}`}
+                      rows="2"
+                      class="w-full bg-cyber-black border border-cyber-teal/30 px-3 py-2 font-mono text-sm text-cyber-white focus:border-cyber-teal focus:outline-none transition-colors resize-none"
+                    >{slide.heading[loc]?.dataText || ''}</textarea>
                   </div>
                 </div>
               </div>
