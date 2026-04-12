@@ -214,7 +214,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     buttons: [
       {
-        href: '#ia-automatizacion',
+        href: '/ia-automatizacion-empresas',
         label: { es: 'Explorar IA y automatización', ca: 'Explorar IA i automatització' },
         style: 'primary',
       },
@@ -275,7 +275,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     buttons: [
       {
-        href: '#agentes-ia',
+        href: '/agentes-ia-rag',
         label: { es: 'Ver agentes IA y RAG', ca: 'Veure agents IA i RAG' },
         style: 'primary',
       },
@@ -336,7 +336,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     buttons: [
       {
-        href: '#desarrollo-web',
+        href: '/web-corporativa',
         label: { es: 'Ver desarrollo a medida', ca: 'Veure desenvolupament a mida' },
         style: 'primary',
       },
