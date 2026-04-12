@@ -33,6 +33,33 @@ const faqSchema = {
     }
   }))
 };
+
+// Hero services ItemList — makes individual services indexable by Google crawlers
+const heroItemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Servicios CIBAI.Studio",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Automatización de Procesos Empresariales con IA",
+      "description": "Automatización de procesos empresariales con IA — recupera tiempo y eficiencia operativa"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Agentes IA, Chatbots RAG y Voz Inteligente para Empresas",
+      "description": "Agentes IA, chatbots RAG y voz inteligente para empresas — atención 24/7 y conversión mejorada"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Desarrollo Web, Ecommerce y Software Empresarial",
+      "description": "Desarrollo web corporativo, ecommerce a medida y software empresarial — Barcelona, España"
+    }
+  ]
+};
 ---
 
 <Layout
@@ -40,8 +67,9 @@ const faqSchema = {
   description={t.meta.description}
   locale="es"
   canonicalPath="/"
-  isHome={true}
-  pageSchema={faqSchema}
+  hreflangEs="https://cibai.studio/"
+  hreflangCa="https://cibai.studio/ca/"
+  schemaMarkup={[websiteSchema, faqSchema, heroItemListSchema]}
 >
   <HomePage locale="es" />
 </Layout>
