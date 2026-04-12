@@ -31,7 +31,8 @@ const organizationSchema = {
   "name": "CIBAI.Studio",
   "url": siteUrl,
   "logo": `${siteUrl}/logo.png`,
-  "description": "Estudio especializado en IA, automatización, software a medida y activos digitales para empresas.",
+  "slogan": "Consultoría tecnológica en IA, automatización y software a medida para empresas",
+  "description": "Consultoría tecnológica en Barcelona. Diseñamos sistemas de IA, automatización, software a medida y webs que posicionan.",
   "foundingDate": "2024",
   "founders": [
     {
@@ -43,8 +44,19 @@ const organizationSchema = {
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Barcelona",
+    "addressRegion": "Cataluña",
     "addressCountry": "ES"
   },
+  "areaServed": ["Barcelona", "Cataluña", "España"],
+  "knowsAbout": [
+    "Inteligencia Artificial",
+    "Automatización de procesos",
+    "Software a medida",
+    "Desarrollo web",
+    "Ecommerce",
+    "Agentes IA",
+    "Chatbots RAG"
+  ],
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "customer service",
@@ -55,7 +67,11 @@ const organizationSchema = {
   "sameAs": [
     "https://www.linkedin.com/company/cibai-studio",
     "https://instagram.com/cibai.studio"
-  ]
+  ],
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["h1", "[data-text]"]
+  }
 };
 
 const allSchemas = [organizationSchema, ...schemaMarkup];
