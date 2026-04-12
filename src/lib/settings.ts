@@ -35,6 +35,7 @@ export interface HeroSlideHeading {
   line2: string;
   line3: string;
   full: string;
+  dataText?: string;
 }
 
 export interface HeroSlideTerminal {
@@ -106,21 +107,23 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'orange',
     badges: {
-      es: ['CIBAI_STUDIO', 'BERGA, BARCELONA, ESPAÑA', 'STATUS: ONLINE'],
-      ca: ['CIBAI_STUDIO', 'BERGA, BARCELONA, ESPANYA', 'STATUS: ONLINE'],
+      es: ['CIBAI_STUDIO', 'BERGA · BARCELONA · ESPAÑA', 'IA · AUTOMATIZACIÓN · SOFTWARE'],
+      ca: ['CIBAI_STUDIO', 'BERGA · BARCELONA · ESPANYA', 'IA · AUTOMATITZACIÓ · PROGRAMARI'],
     },
     heading: {
       es: {
         line1: 'LA TECNOLOGÍA NO BASTA.',
-        line2: 'CONSTRUIMOS SISTEMAS DISEÑADOS',
-        line3: 'PARA DURAR Y FUNCIONAR DE VERDAD.',
-        full: 'La tecnología no basta. Construimos sistemas de IA, automatización y software diseñados para durar y funcionar de verdad.',
+        line2: 'DISEÑAMOS SISTEMAS DE IA,',
+        line3: 'AUTOMATIZACIÓN Y SOFTWARE QUE SÍ FUNCIONAN.',
+        full: 'La tecnología no basta. Diseñamos sistemas de IA, automatización y software que sí funcionan.',
+        dataText: 'CIBAI.Studio — Consultoría tecnológica en IA, automatización y software a medida para empresas',
       },
       ca: {
         line1: "LA TECNOLOGIA NO N'HI HA PROU.",
-        line2: 'CONSTRUÏM SISTEMES DISSENYATS',
-        line3: 'PER DURAR I FUNCIONAR DE DEBÒ.',
-        full: "La tecnologia no n'hi ha prou. Construïm sistemes d'IA, automatització i programari dissenyats per durar i funcionar de debò.",
+        line2: "DISSENYEM SISTEMES D'IA,",
+        line3: 'AUTOMATITZACIÓ I PROGRAMARI QUE SÍ FUNCIONEN.',
+        full: "La tecnologia no n'hi ha prou. Dissenyem sistemes d'IA, automatització i programari que sí funcionen.",
+        dataText: 'CIBAI.Studio — Consultoria tecnològica en IA, automatització i programari a mida per a empreses',
       },
     },
     subtitle: {
@@ -180,12 +183,14 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
         line2: 'QUE LIBERA A TU EQUIPO',
         line3: 'PARA LO QUE GENERA VALOR REAL.',
         full: 'Automatización de procesos que libera a tu equipo para lo que genera valor real.',
+        dataText: 'Automatización de procesos empresariales con IA — recupera tiempo y eficiencia operativa',
       },
       ca: {
         line1: 'AUTOMATITZACIÓ DE PROCESSOS',
         line2: 'QUE ALLIBERA EL TEU EQUIP',
         line3: 'PER AL QUE GENERA VALOR REAL.',
         full: 'Automatització de processos que allibera el teu equip per al que genera valor real.',
+        dataText: 'Automatització de processos empresarials amb IA — recupera temps i eficiència operativa',
       },
     },
     subtitle: {
@@ -241,12 +246,14 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
         line2: 'RESPONDEN Y CONVIERTEN',
         line3: 'SIN AUMENTAR TU EQUIPO.',
         full: 'Agentes IA que atienden, responden y convierten sin aumentar tu equipo.',
+        dataText: 'Agentes IA, chatbots RAG y voz inteligente para empresas — atención 24/7 y conversión mejorada',
       },
       ca: {
         line1: 'AGENTS IA QUE ATENEN,',
         line2: 'RESPONEN I CONVERTEIXEN',
         line3: 'SENSE AMPLIAR EL TEU EQUIP.',
         full: 'Agents IA que atenen, responen i converteixen sense ampliar el teu equip.',
+        dataText: 'Agents IA, chatbots RAG i veu intel·ligent per a empreses — atenció 24/7 i conversió millorada',
       },
     },
     subtitle: {
@@ -293,8 +300,8 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'orange',
     badges: {
-      es: ['SOFTWARE_WEB', 'ECOMMERCE A MEDIDA', 'WEB CORPORATIVA'],
-      ca: ['SOFTWARE_WEB', 'ECOMMERCE A MIDA', 'WEB CORPORATIVA'],
+      es: ['WEB CORPORATIVA', 'ECOMMERCE', 'SOFTWARE A MEDIDA'],
+      ca: ['WEB CORPORATIVA', 'ECOMMERCE', 'PROGRAMARI A MIDA'],
     },
     heading: {
       es: {
@@ -302,12 +309,14 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
         line2: 'QUE POSICIONAN EN GOOGLE,',
         line3: 'CONVIERTEN Y ESCALAN.',
         full: 'Software y webs a medida que posicionan en Google, convierten y escalan.',
+        dataText: 'Desarrollo web corporativo, ecommerce a medida y software empresarial — Barcelona, España',
       },
       ca: {
         line1: 'PROGRAMARI I WEBS A MIDA',
         line2: 'QUE POSICIONEN A GOOGLE,',
         line3: 'CONVERTEIXEN I ESCALEN.',
         full: 'Programari i webs a mida que posicionen a Google, converteixen i escalen.',
+        dataText: 'Desenvolupament web corporatiu, ecommerce a mida i programari empresarial — Barcelona, Catalunya',
       },
     },
     subtitle: {
