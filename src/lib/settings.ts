@@ -35,7 +35,7 @@ export interface HeroSlideHeading {
   line2: string;
   line3: string;
   full: string;
-  dataText?: string;
+  dataText?: string; // SEO-optimized text for data-text attribute (schema + crawlers)
 }
 
 export interface HeroSlideTerminal {
@@ -113,22 +113,22 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     heading: {
       es: {
         line1: 'LA TECNOLOGÍA NO BASTA.',
-        line2: 'DISEÑAMOS SISTEMAS DE IA,',
-        line3: 'AUTOMATIZACIÓN Y SOFTWARE QUE SÍ FUNCIONAN.',
-        full: 'La tecnología no basta. Diseñamos sistemas de IA, automatización y software que sí funcionan.',
+        line2: 'CONSTRUIMOS SISTEMAS DISEÑADOS',
+        line3: 'PARA DURAR Y FUNCIONAR DE VERDAD.',
+        full: 'La tecnología no basta. Construimos sistemas de IA, automatización y software diseñados para durar y funcionar de verdad.',
         dataText: 'CIBAI.Studio — Consultoría tecnológica en IA, automatización y software a medida para empresas',
       },
       ca: {
         line1: "LA TECNOLOGIA NO N'HI HA PROU.",
-        line2: "DISSENYEM SISTEMES D'IA,",
-        line3: 'AUTOMATITZACIÓ I PROGRAMARI QUE SÍ FUNCIONEN.',
-        full: "La tecnologia no n'hi ha prou. Dissenyem sistemes d'IA, automatització i programari que sí funcionen.",
-        dataText: 'CIBAI.Studio — Consultoria tecnològica en IA, automatització i programari a mida per a empreses',
+        line2: 'CONSTRUÏM SISTEMES DISSENYATS',
+        line3: 'PER DURAR I FUNCIONAR DE DEBÒ.',
+        full: "La tecnologia no n'hi ha prou. Construïm sistemes d'IA, automatització i programari dissenyats per durar i funcionar de debò.",
+        dataText: "CIBAI.Studio — Consultoria tecnològica en IA, automatització i programari a mida per a empreses",
       },
     },
     subtitle: {
       es: 'En CIBAI.Studio diseñamos e implementamos soluciones reales de IA, automatización, software y activos digitales para que tu empresa opere mejor, venda más y escale sin multiplicar el caos.',
-      ca: 'A CIBAI.Studio dissenyem i implementem solucions reals d\'IA, automatització, software i actius digitals perquè la teva empresa operi millor, vengui més i escali sense multiplicar el caos.',
+      ca: "A CIBAI.Studio dissenyem i implementem solucions reals d'IA, automatització, software i actius digitals perquè la teva empresa operi millor, vengui més i escali sense multiplicar el caos.",
     },
     terminal: {
       es: {
@@ -195,7 +195,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     subtitle: {
       es: 'Diseñamos e implementamos flujos inteligentes, automatizaciones e integraciones que eliminan el trabajo repetitivo, reducen errores y dan a tu equipo tiempo para lo que genera valor real.',
-      ca: 'Dissenyem i implementem fluxos intel·ligents, automatitzacions i integracions que eliminen el treball repetitiu, redueixen errors i donen al teu equip temps per al que genera valor real.',
+      ca: "Dissenyem i implementem fluxos intel·ligents, automatitzacions i integracions que eliminen el treball repetitiu, redueixen errors i donen al teu equip temps per al que genera valor real.",
     },
     terminal: {
       es: {
@@ -219,7 +219,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     buttons: [
       {
-        href: '/ia-automatizacion-empresas',
+        href: '#ia-automatizacion',
         label: { es: 'Explorar IA y automatización', ca: 'Explorar IA i automatització' },
         style: 'primary',
       },
@@ -253,12 +253,12 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
         line2: 'RESPONEN I CONVERTEIXEN',
         line3: 'SENSE AMPLIAR EL TEU EQUIP.',
         full: 'Agents IA que atenen, responen i converteixen sense ampliar el teu equip.',
-        dataText: 'Agents IA, chatbots RAG i veu intel·ligent per a empreses — atenció 24/7 i conversió millorada',
+        dataText: "Agents IA, chatbots RAG i veu intel·ligent per a empreses — atenció 24/7 i conversió millorada",
       },
     },
     subtitle: {
       es: 'Construimos chatbots, agentes IA especializados, sistemas RAG y soluciones de voz inteligente que mejoran la atención, el soporte interno, las ventas y la gestión del conocimiento de tu empresa.',
-      ca: 'Construïm chatbots, agents IA especialitzats, sistemes RAG i solucions de veu intel·ligent que milloren l\'atenció, el suport intern, les vendes i la gestió del coneixement de la teva empresa.',
+      ca: "Construïm chatbots, agents IA especialitzats, sistemes RAG i solucions de veu intel·ligent que milloren l'atenció, el suport intern, les vendes i la gestió del coneixement de la teva empresa.",
     },
     terminal: {
       es: {
@@ -274,15 +274,15 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
         cmd: 'agents-ia',
         flag: '--mode=produccio',
         lines: [
-          '> Agents entrenats sobre la teva empresa, no plantilles.',
-          '> Atenció 24/7 sense augmentar l\'equip.',
-          '> Coneixement accessible a l\'instant.',
+          "> Agents entrenats sobre la teva empresa, no plantilles.",
+          "> Atenció 24/7 sense augmentar l'equip.",
+          "> Coneixement accessible a l'instant.",
         ],
       },
     },
     buttons: [
       {
-        href: '/agentes-ia-rag',
+        href: '#agentes-ia',
         label: { es: 'Ver agentes IA y RAG', ca: 'Veure agents IA i RAG' },
         style: 'primary',
       },
@@ -300,8 +300,8 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'orange',
     badges: {
-      es: ['WEB CORPORATIVA', 'ECOMMERCE', 'SOFTWARE A MEDIDA'],
-      ca: ['WEB CORPORATIVA', 'ECOMMERCE', 'PROGRAMARI A MIDA'],
+      es: ['SOFTWARE_WEB', 'ECOMMERCE A MEDIDA', 'WEB CORPORATIVA'],
+      ca: ['SOFTWARE_WEB', 'ECOMMERCE A MIDA', 'WEB CORPORATIVA'],
     },
     heading: {
       es: {
@@ -321,7 +321,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     subtitle: {
       es: 'Desarrollamos webs corporativas, ecommerce y herramientas a medida que se alinean con tus procesos reales, tu forma de vender y los objetivos concretos de tu empresa.',
-      ca: 'Desenvolupem webs corporatives, ecommerce i eines a mida que s\'alineen amb els teus processos reals, la teva forma de vendre i els objectius concrets de la teva empresa.',
+      ca: "Desenvolupem webs corporatives, ecommerce i eines a mida que s'alineen amb els teus processos reals, la teva forma de vendre i els objectius concrets de la teva empresa.",
     },
     terminal: {
       es: {
@@ -345,7 +345,7 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     },
     buttons: [
       {
-        href: '/web-corporativa',
+        href: '#desarrollo-web',
         label: { es: 'Ver desarrollo a medida', ca: 'Veure desenvolupament a mida' },
         style: 'primary',
       },
@@ -368,7 +368,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
     title: { es: 'Diseño Web Premium', ca: 'Disseny Web Premium' },
     description: {
       es: 'Interfaces visuales que convierten. Diseño UI/UX con identidad de marca, tipografía de alto contraste y animaciones con propósito. Nada genérico, todo a medida.',
-      ca: 'Interfícies visuals que converteixen. Disseny UI/UX amb identitat de marca, tipografia d\'alt contrast i animacions amb propòsit. Res genèric, tot a mida.',
+      ca: "Interfícies visuals que converteixen. Disseny UI/UX amb identitat de marca, tipografia d'alt contrast i animacions amb propòsit. Res genèric, tot a mida.",
     },
     tags: [
       { text: 'UI/UX', borderColor: '#2a2a2a' },
@@ -392,7 +392,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
     title: { es: 'Webapps a Medida', ca: 'Webapps a Mida' },
     description: {
       es: 'Aplicaciones web completas desde cero. React, Next.js, APIs, autenticación y dashboards. Soluciones que escalan con tu negocio y se adaptan a tus procesos.',
-      ca: 'Aplicacions web completes des de zero. React, Next.js, APIs, autenticació i dashboards. Solucions que escalen amb el teu negoci i s\'adapten als teus processos.',
+      ca: "Aplicacions web completes des de zero. React, Next.js, APIs, autenticació i dashboards. Solucions que escalen amb el teu negoci i s'adapten als teus processos.",
     },
     tags: [
       { text: 'NEXT.JS', borderColor: '#2a2a2a' },
@@ -417,7 +417,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
     title: { es: 'Comercio Electrónico', ca: 'Comerç Electrònic' },
     description: {
       es: 'Tiendas online de alto rendimiento. Integración con pasarelas de pago, gestión de inventario, panel de administración y optimización para conversión máxima.',
-      ca: 'Botigues online d\'alt rendiment. Integració amb passarel·les de pagament, gestió d\'inventari, panell d\'administració i optimització per a conversió màxima.',
+      ca: "Botigues online d'alt rendiment. Integració amb passarel·les de pagament, gestió d'inventari, panell d'administració i optimització per a conversió màxima.",
     },
     tags: [
       { text: 'SHOPIFY', borderColor: '#2a2a2a' },
@@ -441,7 +441,7 @@ const DEFAULT_SERVICES: ServiceItem[] = [
     title: { es: 'Soluciones a Medida', ca: 'Solucions a Mida' },
     description: {
       es: 'Desde integraciones de terceros hasta sistemas complejos. Si tienes un problema técnico específico, lo resolvemos con el stack más adecuado para tu caso.',
-      ca: 'Des d\'integracions de tercers fins a sistemes complexos. Si tens un problema tècnic específic, el resolem amb l\'stack més adequat per al teu cas.',
+      ca: "Des d'integracions de tercers fins a sistemes complexos. Si tens un problema tècnic específic, el resolem amb l'stack més adequat per al teu cas.",
     },
     tags: [
       { text: 'NODE.JS', borderColor: '#2a2a2a' },
