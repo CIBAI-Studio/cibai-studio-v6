@@ -77,6 +77,12 @@
       "web_corporativa": "Web corporativa",
       "ecommerce": "Ecommerce a mida"
     },
+    "en_tu_idioma": "En el teu idioma",
+    "en_tu_idioma_dropdown": {
+      "tecnologia_util": "Tecnologia útil",
+      "el_problema": "El Problema",
+      "resultados": "Resultats"
+    },
     "casos_uso": "Casos d'ús",
     "proceso": "Procés",
     "portfolio": "Portfolio",
