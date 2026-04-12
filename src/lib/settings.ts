@@ -300,8 +300,8 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     duration: 6,
     accentColor: 'orange',
     badges: {
-      es: ['SOFTWARE_WEB', 'ECOMMERCE A MEDIDA', 'WEB CORPORATIVA'],
-      ca: ['SOFTWARE_WEB', 'ECOMMERCE A MIDA', 'WEB CORPORATIVA'],
+      es: ['WEB CORPORATIVA', 'ECOMMERCE', 'SOFTWARE A MEDIDA'],
+      ca: ['WEB CORPORATIVA', 'ECOMMERCE', 'PROGRAMARI A MIDA'],
     },
     heading: {
       es: {
