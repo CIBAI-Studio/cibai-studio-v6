@@ -180,22 +180,22 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
     heading: {
       es: {
         line1: 'RECUPERA EL TIEMPO',
-        line2: 'QUE PIERDE TU EQUIPO',
-        line3: 'EN TAREAS QUE YA HACE UNA MÁQUINA.',
-        full: 'Recupera el tiempo que tu equipo pierde en tareas que ya hace una máquina.',
+        line2: 'QUE TU EQUIPO PIERDE',
+        line3: 'EN TAREAS QUE YA PUEDE HACER UNA MÁQUINA.',
+        full: 'Recupera el tiempo que tu equipo pierde en tareas que ya puede hacer una máquina.',
         dataText: 'Automatización de procesos empresariales con IA — recupera tiempo y eficiencia operativa',
       },
       ca: {
         line1: 'RECUPERA EL TEMPS',
-        line2: 'QUE PERD EL TEU EQUIP',
-        line3: 'EN TASQUES QUE JA FA UNA MÀQUINA.',
-        full: 'Recupera el temps que el teu equip perd en tasques que ja fa una màquina.',
+        line2: 'QUE EL TEU EQUIP PERD',
+        line3: 'EN TASQUES QUE JA POT FER UNA MÀQUINA.',
+        full: 'Recupera el temps que el teu equip perd en tasques que ja pot fer una màquina.',
         dataText: 'Automatització de processos empresarials amb IA — recupera temps i eficiència operativa',
       },
     },
     subtitle: {
-      es: 'Diseñamos flujos inteligentes e integraciones que eliminan el trabajo repetitivo, reducen errores y dan a tu equipo tiempo para lo que genera valor real.',
-      ca: "Dissenyem fluxos intel·ligents i integracions que eliminen el treball repetitiu, redueixen errors i donen al teu equip temps per al que genera valor real.",
+      es: 'Diseñamos e implementamos flujos inteligentes, automatizaciones e integraciones que eliminan el trabajo repetitivo, reducen errores y dan a tu equipo tiempo para lo que genera valor real.',
+      ca: "Dissenyem i implementem fluxos intel·ligents, automatitzacions i integracions que eliminen el treball repetitiu, redueixen errors i donen al teu equip temps per al que genera valor real.",
     },
     terminal: {
       es: {
@@ -257,8 +257,8 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
       },
     },
     subtitle: {
-      es: 'Construimos chatbots, agentes IA especializados y sistemas RAG que mejoran la atención, el soporte, las ventas y el conocimiento interno de tu empresa.',
-      ca: "Construïm chatbots, agents IA especialitzats i sistemes RAG que milloren l'atenció, el suport, les vendes i el coneixement intern de la teva empresa.",
+      es: 'Construimos chatbots, agentes IA especializados, sistemas RAG y soluciones de voz inteligente que mejoran la atención, el soporte interno, las ventas y la gestión del conocimiento de tu empresa.',
+      ca: "Construïm chatbots, agents IA especialitzats, sistemes RAG i solucions de veu intel·ligent que milloren l'atenció, el suport intern, les vendes i la gestió del coneixement de la teva empresa.",
     },
     terminal: {
       es: {
@@ -320,8 +320,8 @@ const DEFAULT_HERO_SLIDES: HeroSlide[] = [
       },
     },
     subtitle: {
-      es: 'Desarrollamos webs corporativas, ecommerce y herramientas a medida alineadas con tu operativa y los objetivos concretos de tu empresa.',
-      ca: "Desenvolupem webs corporatives, ecommerce i eines a mida alineades amb la teva operativa i els objectius concrets de la teva empresa.",
+      es: 'Desarrollamos webs corporativas, ecommerce y herramientas a medida que se alinean con tus procesos reales, tu forma de vender y los objetivos concretos de tu empresa.',
+      ca: "Desenvolupem webs corporatives, ecommerce i eines a mida que s'alineen amb els teus processos reals, la teva forma de vendre i els objectius concrets de la teva empresa.",
     },
     terminal: {
       es: {

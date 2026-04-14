@@ -17,8 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
-# database
-data/
+# database (runtime files except tracked seed)
+data/*
+!data/settings.json
 
 # macOS-specific files
 .DS_Store
